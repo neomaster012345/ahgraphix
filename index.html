@@ -1,829 +1,639 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="M_Adnan">
-<title>AH GRAPHIX</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AH GRAPHIX TOOLS - Professional Graphics Software & Assets</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css"> <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            scroll-behavior: smooth; /* Enables smooth scrolling for the whole page */
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #27272a; /* zinc-800 */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #facc15; /* yellow-500 */
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #eab308; /* yellow-600 */
+        }
 
-<!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
-<link rel="stylesheet" type="text/css" href="rs-plugin/css/settings.css" media="screen" />
+        /* --- Global Styles & Utilities --- */
+        .section-title {
+            @apply text-4xl sm:text-5xl font-extrabold text-yellow-400 mb-5 tracking-tight;
+        }
+        .section-subtitle {
+            @apply text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto mb-12 md:mb-16;
+        }
 
-<!-- Bootstrap Core CSS -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
+        /* --- Navigation Styles --- */
+        .nav-link {
+            @apply px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-yellow-400 transition-colors duration-150;
+        }
+        .nav-link-active { /* For current page/section */
+            @apply bg-yellow-500 text-black px-3 py-2 rounded-md text-sm font-medium;
+        }
+         .mobile-nav-link {
+            @apply block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-yellow-400 transition-colors duration-150;
+        }
+        .mobile-nav-link-active { /* For current page/section */
+             @apply block px-3 py-2 rounded-md text-base font-medium bg-yellow-500 text-black;
+        }
 
-<!-- Custom CSS -->
-<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link href="css/ionicons.min.css" rel="stylesheet">
-<link href="css/main.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
-<link href="css/responsive.css" rel="stylesheet">
+        /* --- Hero Section Styles --- */
+        .hero-bg {
+            background-image: linear-gradient(rgba(17, 24, 39, 0.85), rgba(17, 24, 39, 0.95)), url('https://placehold.co/1920x1080/0a0a0a/FACC15?text=AH+GRAPHIX+TOOLS+BG');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .btn-primary-hero {
+             @apply bg-yellow-500 text-black text-lg font-bold px-10 py-4 rounded-lg hover:bg-yellow-600 transition-all duration-300 shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:ring-opacity-50;
+        }
+        .btn-secondary-hero {
+            @apply bg-transparent border-2 border-yellow-500 text-yellow-500 text-lg font-bold px-10 py-4 rounded-lg hover:bg-yellow-500 hover:text-black transition-all duration-300 shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:ring-opacity-50;
+        }
 
-<!-- JavaScripts -->
-<script src="js/modernizr.js"></script>
+        /* --- Feature Card Styles --- */
+        .feature-card {
+            @apply bg-gray-800 p-8 rounded-xl shadow-2xl border border-gray-700 hover:border-yellow-500 transition-all duration-300 transform hover:-translate-y-2;
+        }
 
-<!-- Online Fonts -->
-<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Playfair+Display:400,700,900' rel='stylesheet' type='text/css'>
+        /* --- Tool Showcase Card Styles (from Index) --- */
+        .tool-showcase-card {
+            @apply bg-gray-800 p-6 rounded-xl shadow-xl border border-gray-700 flex flex-col items-center text-center transition-all duration-300 transform hover:scale-105 hover:shadow-yellow-500/20 hover:border-yellow-500;
+        }
+        .tool-showcase-card img {
+            @apply w-24 h-24 rounded-full object-contain mb-4 border-2 border-gray-700 group-hover:border-yellow-500 transition-colors duration-300;
+        }
+        .tool-showcase-card h3 {
+            @apply text-lg font-semibold text-white mb-3;
+        }
+        .tool-showcase-card .btn-buy {
+            @apply mt-auto bg-yellow-500 text-black font-semibold py-2 px-6 rounded-lg hover:bg-yellow-600 transition-colors duration-300 text-sm;
+        }
 
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
+        /* --- Product Card Styles (from Shop) --- */
+        .product-card {
+            @apply bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl shadow-2xl overflow-hidden flex flex-col group transition-all duration-300 border border-gray-700/50 hover:border-yellow-500/70 hover:shadow-yellow-500/30;
+        }
+        .product-card-image-container {
+            @apply relative overflow-hidden aspect-[16/10];
+        }
+        .product-card-image {
+            @apply w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out;
+        }
+        .product-card-overlay {
+            @apply absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300;
+        }
+        .product-card-content {
+            @apply p-6 md:p-8 flex flex-col flex-grow;
+        }
+        .product-card-title {
+            @apply text-2xl lg:text-3xl font-black text-yellow-400 mb-3 tracking-tight group-hover:text-yellow-300 transition-colors duration-300;
+            text-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+        }
+        .product-card-description {
+            @apply text-gray-300 text-sm mb-5 flex-grow leading-relaxed;
+        }
+        .product-card-features {
+            @apply text-xs text-gray-400 space-y-1 mb-5 list-disc list-inside pl-1;
+        }
+        .product-card-features li::marker {
+            color: #facc15; /* yellow-500 */
+        }
+        .product-card-price-container {
+            @apply mb-6 text-left;
+        }
+        .product-card-price {
+            @apply text-4xl lg:text-5xl font-extrabold text-white;
+        }
+        .product-card-price-term {
+            @apply text-lg font-medium text-gray-400;
+        }
+        .btn-purchase {
+            @apply w-full bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-bold py-3.5 px-6 rounded-lg hover:from-yellow-600 hover:to-yellow-700 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-yellow-400/50 shadow-xl hover:shadow-yellow-500/40 flex items-center justify-center space-x-2.5 text-base;
+        }
+        .btn-purchase svg {
+            @apply w-5 h-5;
+        }
+        .popular-badge { /* For product cards */
+            @apply absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-red-600 to-red-700 text-white text-xs font-bold px-5 py-2 rounded-full shadow-lg tracking-wider z-20 border-2 border-gray-800;
+        }
 
+        /* --- Offer Card Styles (from Offers) --- */
+        .offer-hero-bg { /* This might not be needed if offers are a section */
+            background-image: linear-gradient(rgba(17, 24, 39, 0.9), rgba(17, 24, 39, 0.98)), url('https://placehold.co/1920x800/111827/FDE047?text=Exclusive+Offers+BG');
+            background-size: cover;
+            background-position: center;
+        }
+        .offer-card {
+            @apply bg-gray-800 rounded-xl shadow-2xl border border-gray-700 overflow-hidden flex flex-col md:flex-row transition-all duration-300 hover:shadow-yellow-500/30 hover:border-yellow-500;
+        }
+        .offer-card-image-container {
+            @apply md:w-2/5 lg:w-1/3 xl:w-2/5;
+        }
+        .offer-card-image {
+            @apply w-full h-64 md:h-full object-cover;
+        }
+        .offer-card-content {
+            @apply p-6 md:p-8 flex flex-col justify-between md:w-3/5 lg:w-2/3 xl:w-3/5;
+        }
+        .offer-badge { /* For offer cards */
+            @apply absolute top-4 left-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md uppercase tracking-wider z-10;
+        }
+        .btn-claim-offer {
+            @apply mt-6 inline-block bg-yellow-500 text-black font-bold py-3 px-8 rounded-lg hover:bg-yellow-600 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-75 shadow-md;
+        }
+        
+        /* --- Pricing Card Styles (from Index) --- */
+        .pricing-card { /* This was already in index, ensure consistency */
+            @apply bg-gray-800 rounded-xl p-8 shadow-xl border border-gray-700 flex flex-col transition-all duration-300 hover:shadow-yellow-500/20 hover:border-yellow-500;
+        }
+
+        /* --- Testimonial Card Styles (from Index) --- */
+        .testimonial-card { /* This was already in index */
+            @apply bg-gray-800 p-8 rounded-xl shadow-xl border border-gray-700;
+        }
+
+        /* --- Auth Form Styles (Login/Signup) --- */
+        .auth-card { /* General card for login/signup */
+            background-color: rgba(31, 41, 55, 0.9); /* bg-gray-800 with more opacity */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(250, 204, 21, 0.25);
+            @apply shadow-2xl rounded-xl p-8 md:p-10 w-full max-w-md mx-auto;
+        }
+        .form-input {
+            @apply w-full px-4 py-3 bg-gray-700 text-gray-200 border border-gray-600 rounded-lg shadow-sm focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition duration-150 ease-in-out placeholder-gray-500;
+        }
+        .form-label {
+            @apply block text-sm font-medium text-yellow-400 mb-1;
+        }
+        .btn-submit { /* For login/signup forms */
+            @apply w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-md text-base font-bold text-black bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-yellow-400 transition duration-150 ease-in-out transform hover:scale-105;
+        }
+
+        /* Simple fade-in animations */
+        .animate-fade-in-down { animation: fadeInDown 1s ease-out forwards; }
+        .animate-fade-in-up { animation: fadeInUp 1s ease-out forwards; }
+        .animation-delay-300 { animation-delay: 0.3s; }
+        .animation-delay-600 { animation-delay: 0.6s; }
+        @keyframes fadeInDown { 0% { opacity: 0; transform: translateY(-20px); } 100% { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in-down, .animate-fade-in-up { opacity: 0; /* Start hidden */ }
+    </style>
 </head>
-<body>
+<body class="bg-gray-900 text-gray-100">
 
-<!-- LOADER -->
-<div id="loader">
-  <div class="position-center-center">
-    <div class="ldr"></div>
-  </div>
-</div>
-
-<!-- Wrap -->
-<div id="wrap"> 
-  
-  <!-- header -->
-  <header>
-    <div class="sticky">
-      <div class="container"> 
-        
-        <!-- Logo -->
-        <div class="logo"> <a href="index.html"><img class="img-responsive" src="images/logo.png" alt="" ></a> </div>
-        <nav class="navbar ownmenu">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-open-btn" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"><i class="fa fa-navicon"></i></span> </button>
-          </div>
-          
-          <!-- NAV -->
-          <div class="collapse navbar-collapse" id="nav-open-btn">
-            <ul class="nav">
-              <li class="dropdown active"> <a href="#." class="dropdown-toggle" data-toggle="dropdown">Home</a>
-                <ul class="dropdown-menu">
-                  <li> <a href="index.html">Index Default</a> </li>
-                  <li> <a href="index-1.html">Index 2</a> </li>
-                  <li> <a href="index-2.html">Index 3</a></li>
-                  <li> <a href="index-header-1.html">Index Header 1</a></li>
-                  <li> <a href="index-header-2.html">Index Header 2</a></li>
-                  <li> <a href="index-header-3.html">Index Header 3</a></li>
-                  <li> <a href="index-header-4.html">Index Header 4</a></li>
-                </ul>
-              </li>
-              <li class="dropdown"> <a href="#." class="dropdown-toggle" data-toggle="dropdown">Pages</a>
-                <ul class="dropdown-menu">
-                  <li> <a href="shop_01.html">Shop 01 </a> </li>
-                  <li> <a href="shop_02.html">Shop 02</a> </li>
-                  <li> <a href="shop_03.html">Shop 03 </a> </li>
-                  <li> <a href="shop_04.html">Shop 04 </a> </li>
-                  <li> <a href="product-detail_01.html">Product Detail 01</a> </li>
-                  <li> <a href="product-detail_02.html">Product Detail 02</a> </li>
-                  <li> <a href="shopping-cart.html">Shopping Cart</a> </li>
-                  <li> <a href="checkout.html">Checkout</a> </li>
-                  <li> <a href="about-us_01.html">About 01</a> </li>
-                  <li> <a href="about-us_02.html">About 02</a> </li>
-                  <li> <a href="contact.html">Contact</a> </li>
-                  <li> <a href="blog-list_01.html">Blog List 01</a> </li>
-                  <li> <a href="blog-list_02.html">Blog List 02</a> </li>
-                  <li> <a href="blog-list_03.html">Blog List 03 </a> </li>
-                  <li> <a href="blog-detail_01.html">Blog Detail 01 </a> </li>
-                </ul>
-              </li>
-              <li> <a href="about-us_01.html">About </a> </li>
-              
-              <!-- Two Link Option -->
-              <li class="dropdown"> <a href="#." class="dropdown-toggle" data-toggle="dropdown">Designer</a>
-                <div class="dropdown-menu two-option">
-                  <div class="row">
-                    <ul class="col-sm-6">
-                      <li> <a href="shop_01.html">summer store</a></li>
-                      <li> <a href="shop_01.html"> sarees</a></li>
-                      <li> <a href="shop_01.html"> kurtas</a></li>
-                      <li> <a href="shop_01.html"> shorts & tshirts</a></li>
-                      <li> <a href="shop_01.html"> winter wear</a></li>
-                      <li> <a href="shop_01.html"> jeans</a></li>
-                      <li> <a href="shop_01.html"> bra</a></li>
-                      <li> <a href="shop_01.html"> babydools</a> </li>
-                    </ul>
-                    <ul class="col-sm-6">
-                      <li> <a href="shop_01.html">deodornts</a></li>
-                      <li> <a href="shop_01.html"> skin care</a></li>
-                      <li> <a href="shop_01.html"> make up</a></li>
-                      <li> <a href="shop_01.html"> watch</a></li>
-                      <li> <a href="shop_01.html"> siting bags</a></li>
-                      <li> <a href="shop_01.html"> totes</a></li>
-                      <li> <a href="shop_01.html"> gold rings</a></li>
-                      <li> <a href="shop_01.html"> jewellery</a> </li>
-                    </ul>
-                  </div>
+    <nav class="bg-gray-800 shadow-lg sticky top-0 z-50 border-b border-gray-700">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center flex-shrink-0">
+                    <a href="#hero-section" class="text-2xl md:text-3xl font-extrabold text-yellow-400 hover:opacity-90 transition-opacity">AH GRAPHIX TOOLS</a>
                 </div>
-              </li>
-              
-              <!-- MEGA MENU -->
-              <li class="dropdown megamenu"> <a href="#." class="dropdown-toggle" data-toggle="dropdown">store</a>
-                <div class="dropdown-menu">
-                  <div class="row"> 
-                    
-                    <!-- Shop Pages -->
-                    <div class="col-md-3">
-                      <h6>Shop Pages</h6>
-                      <ul>
-                        <li> <a href="shop_01.html">Shop 01 </a> </li>
-                        <li> <a href="shop_02.html">Shop 02</a> </li>
-                        <li> <a href="shop_03.html">Shop 03 </a> </li>
-                        <li> <a href="shop_04.html">Shop 04 </a> </li>
-                        <li> <a href="product-detail_01.html">Product Detail 01</a> </li>
-                        <li> <a href="product-detail_02.html">Product Detail 02</a> </li>
-                        <li> <a href="shopping-cart.html">Shopping Cart</a> </li>
-                        <li> <a href="checkout.html">Checkout</a> </li>
-                      </ul>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#hero-section" class="nav-link-active" data-nav-section="hero-section">Home</a>
+                        <a href="#features-section" class="nav-link" data-nav-section="features-section">Features</a>
+                        <a href="#shop-section" class="nav-link" data-nav-section="shop-section">Shop</a>
+                        <a href="#offers-section" class="nav-link" data-nav-section="offers-section">Offers</a>
+                        <a href="#pricing-section" class="nav-link" data-nav-section="pricing-section">Pricing</a>
+                        <a href="#testimonials-section" class="nav-link" data-nav-section="testimonials-section">Testimonials</a>
+                        <a href="#login-section" class="ml-4 bg-yellow-500 text-black px-4 py-2 rounded-lg text-sm font-bold hover:bg-yellow-600 transition duration-300 transform hover:scale-105">Login</a>
+                        <a href="#signup-section" class="ml-2 bg-gray-700 text-yellow-400 border border-yellow-400 px-4 py-2 rounded-lg text-sm font-bold hover:bg-yellow-400 hover:text-black transition duration-300 transform hover:scale-105">Sign Up</a>
                     </div>
-                    
-                    <!-- TOp Rate Products -->
-                    <div class="col-md-4">
-                      <h6>TOp Rate Products</h6>
-                      <div class="top-rated">
-                        <ul>
-                          <li>
-                            <div class="media-left">
-                              <div class="cart-img"> <a href="#"> <img class="media-object img-responsive" src="images/cart-img-1.jpg" alt="..."> </a> </div>
-                            </div>
-                            <div class="media-body">
-                              <h6 class="media-heading">WOOD CHAIR</h6>
-                              <div class="stars"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div>
-                              <span class="price">129.00 USD</span> </div>
-                          </li>
-                          <li>
-                            <div class="media-left">
-                              <div class="cart-img"> <a href="#"> <img class="media-object img-responsive" src="images/cart-img-2.jpg" alt="..."> </a> </div>
-                            </div>
-                            <div class="media-body">
-                              <h6 class="media-heading">STOOL</h6>
-                              <div class="stars"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div>
-                              <span class="price">129.00 USD</span> </div>
-                          </li>
-                          <li>
-                            <div class="media-left">
-                              <div class="cart-img"> <a href="#"> <img class="media-object img-responsive" src="images/cart-img-3.jpg" alt="..."> </a> </div>
-                            </div>
-                            <div class="media-body">
-                              <h6 class="media-heading">WOOD SPOON</h6>
-                              <div class="stars"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div>
-                              <span class="price">129.00 USD</span> </div>
-                          </li>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <button id="mobile-menu-button" type="button" class="bg-gray-700 inline-flex items-center justify-center p-2 rounded-md text-yellow-400 hover:text-black hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white transition duration-150" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg id="menu-icon-open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                        <svg id="menu-icon-close" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden border-t border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#hero-section" class="mobile-nav-link-active" data-nav-section="hero-section">Home</a>
+                <a href="#features-section" class="mobile-nav-link" data-nav-section="features-section">Features</a>
+                <a href="#shop-section" class="mobile-nav-link" data-nav-section="shop-section">Shop</a>
+                <a href="#offers-section" class="mobile-nav-link" data-nav-section="offers-section">Offers</a>
+                <a href="#pricing-section" class="mobile-nav-link" data-nav-section="pricing-section">Pricing</a>
+                <a href="#testimonials-section" class="mobile-nav-link" data-nav-section="testimonials-section">Testimonials</a>
+            </div>
+            <div class="pt-4 pb-3 border-t border-gray-700">
+                <div class="flex flex-col px-2 space-y-2">
+                    <a href="#login-section" class="block w-full text-center bg-yellow-500 text-black px-4 py-2 rounded-lg font-bold hover:bg-yellow-600 transition duration-300">Login</a>
+                    <a href="#signup-section" class="block w-full text-center bg-gray-700 text-yellow-400 border border-yellow-400 px-4 py-2 rounded-lg font-bold hover:bg-yellow-400 hover:text-black transition duration-300">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header id="hero-section" class="hero-bg text-white relative overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center text-center py-16 md:py-20">
+            <h1 class="text-5xl sm:text-6xl md:text-7xl font-black mb-6 md:mb-8 leading-tight animate-fade-in-down">
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-300">Unleash Your Creative</span> Power
+            </h1>
+            <p class="text-lg sm:text-xl md:text-2xl text-gray-300 mb-10 md:mb-12 max-w-3xl mx-auto animate-fade-in-up">
+                Access an arsenal of professional graphics software, exclusive assets, and powerful tools. Elevate your designs with AH GRAPHIX TOOLS.
+            </p>
+            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 animate-fade-in-up animation-delay-300">
+                <a href="#shop-section" class="btn-primary-hero">Explore Tool Packages</a>
+                <a href="#features-section" class="btn-secondary-hero">Learn More</a>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-gray-900 to-transparent"></div>
+    </header>
+
+    <section id="features-section" class="py-16 md:py-24 bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title text-center">Why AH GRAPHIX TOOLS?</h2>
+            <p class="section-subtitle text-center">We provide everything you need to create stunning visuals, streamline your workflow, and stand out from the crowd.</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+                <div class="feature-card animate-fade-in-up">
+                    <div class="flex items-center justify-center w-16 h-16 bg-yellow-500 text-black rounded-full mb-6 shadow-lg">
+                        <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.486H7.343v-2.343L11 7.343z" /></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 text-white">Pro-Grade Software</h3>
+                    <p class="text-gray-400 leading-relaxed">Access industry-standard graphics software for editing, illustration, 3D modeling, and video production at a fraction of the cost.</p>
+                </div>
+                <div class="feature-card animate-fade-in-up animation-delay-300">
+                    <div class="flex items-center justify-center w-16 h-16 bg-yellow-500 text-black rounded-full mb-6 shadow-lg">
+                         <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 text-white">Vast Asset Libraries</h3>
+                    <p class="text-gray-400 leading-relaxed">Unlock thousands of high-quality stock photos, vectors, fonts, templates, mockups, and 3D assets to fuel your projects.</p>
+                </div>
+                <div class="feature-card animate-fade-in-up animation-delay-600">
+                    <div class="flex items-center justify-center w-16 h-16 bg-yellow-500 text-black rounded-full mb-6 shadow-lg">
+                        <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 text-white">Affordable & Flexible</h3>
+                    <p class="text-gray-400 leading-relaxed">Choose from a range of cost-effective plans. Get the tools you need without breaking the bank. Cancel or upgrade anytime.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tool-showcase-section" class="py-16 md:py-24 bg-gray-800 border-t border-b border-gray-700">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title text-center">Our Featured Tools Suite</h2>
+            <p class="section-subtitle text-center">Get access to a wide array of industry-leading creative software through our affordable plans.</p>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-6 md:gap-8">
+                <div class="tool-showcase-card group">
+                    <img src="https://placehold.co/100x100/1F2937/FACC15?text=PS" alt="Photoshop Alternative Logo">
+                    <h3>PhotoCraft Pro</h3>
+                    <a href="#shop-section" class="btn-buy">Get Access</a>
+                </div>
+                <div class="tool-showcase-card group">
+                    <img src="https://placehold.co/100x100/1F2937/FDE047?text=AI" alt="Illustrator Alternative Logo">
+                    <h3>VectorFlow</h3>
+                    <a href="#shop-section" class="btn-buy">Get Access</a>
+                </div>
+                <div class="tool-showcase-card group">
+                    <img src="https://placehold.co/100x100/1F2937/FBBF24?text=PR" alt="Premiere Pro Alternative Logo">
+                    <h3>EditReel</h3>
+                    <a href="#shop-section" class="btn-buy">Get Access</a>
+                </div>
+                <div class="tool-showcase-card group">
+                    <img src="https://placehold.co/100x100/1F2937/F9A825?text=AE" alt="After Effects Alternative Logo">
+                    <h3>MotionSpark</h3>
+                    <a href="#shop-section" class="btn-buy">Get Access</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="shop-section" class="py-16 md:py-24 bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 md:mb-20">
+                <h1 class="section-title">Our Graphics Tool Packages</h1>
+                <p class="section-subtitle">Find the perfect collection of graphics tools to boost your creativity. Premium assets, powerful software, exceptional value.</p>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 items-stretch">
+                <div class="product-card">
+                    <div class="product-card-image-container">
+                        <img src="images/graphics-starter-kit.jpg" alt="Graphics Starter Kit Package" class="product-card-image" onerror="this.src='https://placehold.co/600x400/1F2937/FACC15?text=Starter+Graphics+Kit'; this.onerror=null;">
+                        <div class="product-card-overlay"></div>
+                    </div>
+                    <div class="product-card-content">
+                        <h3 class="product-card-title">Starter Graphics Kit</h3>
+                        <p class="product-card-description">Essential assets and basic tools for new designers and hobbyists. Get started with quality resources without breaking the bank.</p>
+                        <ul class="product-card-features">
+                            <li>Access to 3 Core Design Tools</li>
+                            <li>1,000+ Starter Assets</li>
+                            <li>Community Forum Access</li>
                         </ul>
-                      </div>
+                        <div class="product-card-price-container">
+                            <span class="product-card-price">$29</span>
+                            <span class="product-card-price-term">/mo</span>
+                        </div>
+                        <button class="btn-purchase">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" /></svg>
+                            <span>Purchase Now</span>
+                        </button>
                     </div>
-                    
-                    <!-- New Arrival -->
-                    <div class="col-md-5">
-                      <h5>NEW ARRIVAL 2016 <span>(Best Collection)</span></h5>
-                      <img class="nav-img" src="images/nav-img.png" alt="" >
-                      <p>Lorem ipsum dolor sit amet,<br>
-                        consectetur adipiscing elit. <br>
-                        Donec faucibus maximus<br>
-                        vehicula.</p>
-                      <a href="#." class="btn btn-small btn-round">SHOP NOW</a> </div>
-                  </div>
                 </div>
-              </li>
-              <li> <a href="contact.html"> contact</a> </li>
-            </ul>
-          </div>
-          
-          <!-- Nav Right -->
-          <div class="nav-right">
-            <ul class="navbar-right">
-              
-              <!-- USER INFO -->
-              <li class="dropdown user-acc"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" ><i class="icon-user"></i> </a>
-                <ul class="dropdown-menu">
-                  <li>
-                    <h6>HELLO! Jhon Smith</h6>
-                  </li>
-                  <li><a href="#">MY CART</a></li>
-                  <li><a href="#">ACCOUNT INFO</a></li>
-                  <li><a href="#">LOG OUT</a></li>
-                </ul>
-              </li>
-              
-              <!-- USER BASKET -->
-              <li class="dropdown user-basket"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i class="icon-basket-loaded"></i> </a>
-                <ul class="dropdown-menu">
-                  <li>
-                    <div class="media-left">
-                      <div class="cart-img"> <a href="#"> <img class="media-object img-responsive" src="images/cart-img-1.jpg" alt="..."> </a> </div>
+                <div class="product-card relative">
+                    <span class="popular-badge">POPULAR</span>
+                    <div class="product-card-image-container">
+                        <img src="images/pro-designer-suite.jpg" alt="Pro Designer Graphics Suite" class="product-card-image" onerror="this.src='https://placehold.co/600x400/374151/FDE047?text=Pro+Designer+Suite'; this.onerror=null;">
+                         <div class="product-card-overlay"></div>
                     </div>
-                    <div class="media-body">
-                      <h6 class="media-heading">WOOD CHAIR</h6>
-                      <span class="price">129.00 USD</span> <span class="qty">QTY: 01</span> </div>
-                  </li>
-                  <li>
-                    <div class="media-left">
-                      <div class="cart-img"> <a href="#"> <img class="media-object img-responsive" src="images/cart-img-2.jpg" alt="..."> </a> </div>
+                    <div class="product-card-content">
+                        <h3 class="product-card-title">Pro Designer Suite</h3>
+                        <p class="product-card-description">Comprehensive software and premium assets for professional designers. Includes advanced editing tools and exclusive templates.</p>
+                         <ul class="product-card-features">
+                            <li>Access to 10+ Pro Tools</li>
+                            <li>10,000+ Premium Assets</li>
+                            <li>Advanced Tutorial Library</li>
+                            <li>Priority Support</li>
+                        </ul>
+                        <div class="product-card-price-container">
+                            <span class="product-card-price">$69</span>
+                            <span class="product-card-price-term">/mo</span>
+                        </div>
+                        <button class="btn-purchase">
+                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" /></svg>
+                            <span>Purchase Now</span>
+                        </button>
                     </div>
-                    <div class="media-body">
-                      <h6 class="media-heading">WOOD STOOL</h6>
-                      <span class="price">129.00 USD</span> <span class="qty">QTY: 01</span> </div>
-                  </li>
-                  <li>
-                    <h5 class="text-center">SUBTOTAL: 258.00 USD</h5>
-                  </li>
-                  <li class="margin-0">
-                    <div class="row">
-                      <div class="col-xs-6"> <a href="shopping-cart.html" class="btn">VIEW CART</a></div>
-                      <div class="col-xs-6 "> <a href="checkout.html" class="btn">CHECK OUT</a></div>
+                </div>
+                <div class="product-card">
+                     <div class="product-card-image-container">
+                        <img src="images/agency-power-pack.jpg" alt="Agency Power Graphics Pack" class="product-card-image" onerror="this.src='https://placehold.co/600x400/111827/FBBF24?text=Agency+Power+Pack'; this.onerror=null;">
+                         <div class="product-card-overlay"></div>
                     </div>
-                  </li>
-                </ul>
-              </li>
-              
-              <!-- SEARCH BAR -->
-              <li class="dropdown"> <a href="javascript:void(0);" class="search-open"><i class=" icon-magnifier"></i></a>
-                <div class="search-inside animated bounceInUp"> <i class="icon-close search-close"></i>
-                  <div class="search-overlay"></div>
-                  <div class="position-center-center">
-                    <div class="search">
-                      <form>
-                        <input type="search" placeholder="Search Shop">
-                        <button type="submit"><i class="icon-check"></i></button>
-                      </form>
+                    <div class="product-card-content">
+                        <h3 class="product-card-title">Agency Power Pack</h3>
+                        <p class="product-card-description">The ultimate collection for design agencies. Full software suite, team collaboration features, and extensive asset libraries for unlimited creativity.</p>
+                         <ul class="product-card-features">
+                            <li>All Pro Tools + Agency Features</li>
+                            <li>Unlimited Asset Downloads</li>
+                            <li>Team Collaboration (5 Seats)</li>
+                            <li>Dedicated Account Manager</li>
+                        </ul>
+                        <div class="product-card-price-container">
+                            <span class="product-card-price">$149</span>
+                            <span class="product-card-price-term">/mo</span>
+                        </div>
+                         <button class="btn-purchase">
+                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" /></svg>
+                            <span>Purchase Now</span>
+                        </button>
                     </div>
-                  </div>
                 </div>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-    </div>
-  </header>
-  
-  <!--======= HOME MAIN SLIDER =========-->
-  <section class="home-slider"> 
-    
-    <!-- SLIDE Start -->
-    <div class="tp-banner-container">
-      <div class="tp-banner">
-        <ul>
-          <!-- SLIDE  -->
-          <li data-transition="random" data-slotamount="7" data-masterspeed="300"  data-saveperformance="off" > 
-            <!-- MAIN IMAGE --> 
-            <img src="images/slide-bg-1.jpg"  alt="slider"  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat"> 
-            <!-- LAYERS --> 
-            <!-- LAYER NR. 1 -->
-            <div class="tp-caption font-playfair sfb tp-resizeme" 
-                data-x="left" data-hoffset="0" 
-                data-y="center" data-voffset="-200" 
-                data-speed="800" 
-                data-start="500" 
-                data-easing="Power3.easeInOut" 
-                data-splitin="none" 
-                data-splitout="none" 
-                data-elementdelay="0.1" 
-                data-endelementdelay="0.1" 
-                data-endspeed="300" 
-                style="z-index: 7; font-size:18px; color:#fff; max-width: auto; max-height: auto; white-space: nowrap;">The Latest Product from ecoshop</div>
-            <!-- LAYER NR. 2 -->
-            <div class="tp-caption sfl font-extra-bold tp-resizeme" 
-                data-x="left" data-hoffset="0" 
-                data-y="center" data-voffset="-120" 
-                data-speed="800" 
-                data-start="800" 
-                data-easing="Power3.easeInOut" 
-                data-splitin="none" 
-                data-splitout="none" 
-                data-elementdelay="0.07" 
-                data-endelementdelay="0.1" 
-                data-endspeed="300" 
-                style="z-index: 6; font-size:80px; color:#2d3a4b; text-transform:uppercase; white-space: nowrap;"><small class="font-regular">$</small>299 </div>
-            <!-- LAYER NR. 2 -->
-            <div class="tp-caption sfr font-extra-bold tp-resizeme" 
-                data-x="left" data-hoffset="0" 
-                data-y="center" data-voffset="0" 
-                data-speed="800" 
-                data-start="800" 
-                data-easing="Power3.easeInOut" 
-                data-splitin="chars" 
-                data-splitout="none" 
-                data-elementdelay="0.07" 
-                data-endelementdelay="0.1" 
-                data-endspeed="300" 
-                style="z-index: 6; font-size:120px; color:#fff; text-transform:uppercase; white-space: nowrap;">featured </div>
-            <!-- LAYER NR. 2 -->
-            <div class="tp-caption sfr font-extra-bold tp-resizeme" 
-                data-x="left" data-hoffset="0" 
-                data-y="center" data-voffset="110" 
-                data-speed="800" 
-                data-start="1300" 
-                data-easing="Power3.easeInOut" 
-                data-splitin="chars" 
-                data-splitout="none" 
-                data-elementdelay="0.07" 
-                data-endelementdelay="0.1" 
-                data-endspeed="300" 
-                style="z-index: 6; font-size:120px; color:#fff; text-transform:uppercase; white-space: nowrap;">cycle </div>
-            <!-- LAYER NR. 4 -->
-            <div class="tp-caption lfb tp-resizeme" 
-                data-x="left" data-hoffset="0" 
-                data-y="center" data-voffset="240" 
-                data-speed="800" 
-                data-start="2200" 
-                data-easing="Power3.easeInOut" 
-                data-elementdelay="0.1" 
-                data-endelementdelay="0.1" 
-                data-endspeed="300" 
-                data-scrolloffset="0"
-                style="z-index: 8;"><a href="#." class="btn">SHOP NOW</a> </div>
-          </li>
-          
-          <!-- SLIDE  -->
-          <li data-transition="random" data-slotamount="7" data-masterspeed="300"  data-saveperformance="off" > 
-            <!-- MAIN IMAGE --> 
-            <img src="images/slide-bg-2.jpg"  alt="slider"  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat"> 
-            <!-- LAYERS --> 
-            <!-- LAYER NR. 1 -->
-            <div class="tp-caption font-playfair sfb tp-resizeme" 
-                data-x="center" data-hoffset="0" 
-                data-y="center" data-voffset="-150" 
-                data-speed="800" 
-                data-start="500" 
-                data-easing="Power3.easeInOut" 
-                data-splitin="none" 
-                data-splitout="none" 
-                data-elementdelay="0.1" 
-                data-endelementdelay="0.1" 
-                data-endspeed="300" 
-                style="z-index: 7; font-size:18px; color:#fff; max-width: auto; max-height: auto; white-space: nowrap;">The Latest Product from ecoshop</div>
-            <!-- LAYER NR. 2 -->
-            <div class="tp-caption sfr font-regular tp-resizeme letter-space-4" 
-                data-x="center" data-hoffset="0" 
-                data-y="center" data-voffset="-50" 
-                data-speed="800" 
-                data-start="800" 
-                data-easing="Power3.easeInOut" 
-                data-splitin="chars" 
-                data-splitout="none" 
-                data-elementdelay="0.07" 
-                data-endelementdelay="0.1" 
-                data-endspeed="300" 
-                style="z-index: 6; font-size:78px; color:#fff; text-transform:uppercase; white-space: nowrap;">look beautiful </div>
-            <!-- LAYER NR. 2 -->
-            <div class="tp-caption sfr font-extra-bold tp-resizeme letter-space-4" 
-                data-x="center" data-hoffset="0" 
-                data-y="center" data-voffset="60" 
-                data-speed="800" 
-                data-start="1300" 
-                data-easing="Power3.easeInOut" 
-                data-splitin="chars" 
-                data-splitout="none" 
-                data-elementdelay="0.07" 
-                data-endelementdelay="0.1" 
-                data-endspeed="300" 
-                style="z-index: 6; font-size:140px; color:#fff; text-transform:uppercase; white-space: nowrap;">this season </div>
-            <!-- LAYER NR. 4 -->
-            <div class="tp-caption sfb font-extra-bold tp-resizeme" 
-                data-x="center" data-hoffset="120"
-                data-y="center" data-voffset="200"
-                data-speed="800" 
-                data-start="2200" 
-                data-easing="Power3.easeInOut" 
-                data-splitin="none" 
-                data-splitout="none" 
-                data-elementdelay="0.07" 
-                data-endelementdelay="0.1" 
-                data-endspeed="300" 
-                style="z-index: 6; font-size:60px; color:#fff; text-transform:uppercase; white-space: nowrap;"><small class="font-regular">$</small> 299 </div>
-            <!-- LAYER NR. 4 -->
-            <div class="tp-caption lfb tp-scrollbelowslider tp-resizeme" 
-                data-x="center" data-hoffset="-120" 
-                data-y="center" data-voffset="200" 
-                data-speed="800" 
-                data-start="2200" 
-                data-easing="Power3.easeInOut" 
-                data-elementdelay="0.1" 
-                data-endelementdelay="0.1" 
-                data-endspeed="300" 
-                data-scrolloffset="0"
-                style="z-index: 8;"><a href="#." class="btn">BUY NOW</a> </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </section>
-  
-  <!-- Content -->
-  <div id="content"> 
-    
-    <!-- New Arrival -->
-    <section class="padding-top-100 padding-bottom-100">
-      <div class="container"> 
-        
-        <!-- Main Heading -->
-        <div class="heading text-center">
-          <h4>new arrival</h4>
-          <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec faucibus maximus vehicula. 
-          Sed feugiat, tellus vel tristique posuere, diam</span> </div>
-      </div>
-      
-      <!-- New Arrival -->
-      <div class="arrival-block"> 
-        
-        <!-- Item -->
-        <div class="item"> 
-          <!-- Images --> 
-          <img class="img-1" src="images/item-img-1-1.jpg" alt=""> <img class="img-2" src="images/item-img-1-1-1.jpg" alt=""> 
-          <!-- Overlay  -->
-          <div class="overlay"> 
-            <!-- Price --> 
-            <span class="price"><small>$</small>299</span>
-            <div class="position-center-center"> <a href="images/item-img-1-1.jpg" data-lighter><i class="icon-magnifier"></i></a> </div>
-          </div>
-          <!-- Item Name -->
-          <div class="item-name"> <a href="#.">wooden chair</a>
-            <p>Lorem ipsum dolor sit amet</p>
-          </div>
+            </div>
+             <div class="mt-16 text-center">
+                <a href="#offers-section" class="text-yellow-400 font-semibold hover:text-yellow-300 transition duration-150 text-lg group">
+                    Check Out Our Special Offers!
+                    <span class="inline-block transform group-hover:translate-x-2 transition-transform duration-200 ml-1">&rarr;</span>
+                </a>
+            </div>
         </div>
-        
-        <!-- Item -->
-        <div class="item"> 
-          <!-- Images --> 
-          <img class="img-1" src="images/item-img-1-2.jpg" alt=""> <img class="img-2" src="images/item-img-1-1-1.jpg" alt=""> 
-          <!-- Overlay  -->
-          <div class="overlay"> 
-            <!-- Price --> 
-            <span class="price"><small>$</small>299</span>
-            <div class="position-center-center"> <a href="images/item-img-1-2.jpg" data-lighter><i class="icon-magnifier"></i></a> </div>
-          </div>
-          <!-- Item Name -->
-          <div class="item-name"> <a href="#.">MINIMALIST WOO TOYS</a>
-            <p>Lorem ipsum dolor sit amet</p>
-          </div>
-        </div>
-        
-        <!-- Item -->
-        <div class="item"> 
-          <!-- Images --> 
-          <img class="img-1" src="images/item-img-1-3.jpg" alt=""> <img class="img-2" src="images/item-img-1-1-1.jpg" alt=""> 
-          <!-- Overlay  -->
-          <div class="overlay"> 
-            <!-- Price --> 
-            <span class="price"><small>$</small>299</span>
-            <div class="position-center-center"> <a href="images/item-img-1-3.jpg" data-lighter><i class="icon-magnifier"></i></a> </div>
-          </div>
-          <!-- Item Name -->
-          <div class="item-name"> <a href="#.">Concrete Shaving Kit</a>
-            <p>Lorem ipsum dolor sit amet</p>
-          </div>
-        </div>
-        
-        <!-- Item -->
-        <div class="item"> 
-          <!-- Images --> 
-          <img class="img-1" src="images/item-img-1-4.jpg" alt=""> <img class="img-2" src="images/item-img-1-1-1.jpg" alt=""> 
-          <!-- Overlay  -->
-          <div class="overlay"> 
-            <!-- Price --> 
-            <span class="price"><small>$</small>299</span>
-            <div class="position-center-center"> <a href="images/item-img-1-4.jpg" data-lighter><i class="icon-magnifier"></i></a> </div>
-          </div>
-          <!-- Item Name -->
-          <div class="item-name"> <a href="#.">PARAGON PENDANT</a>
-            <p>Lorem ipsum dolor sit amet</p>
-          </div>
-        </div>
-        
-        <!-- Item -->
-        <div class="item"> 
-          <!-- Images --> 
-          <img class="img-1" src="images/item-img-1-5.jpg" alt=""> <img class="img-2" src="images/item-img-1-1-1.jpg" alt=""> 
-          <!-- Overlay  -->
-          <div class="overlay"> 
-            <!-- Price --> 
-            <span class="price"><small>$</small>299</span>
-            <div class="position-center-center"> <a href="images/item-img-1-5.jpg" data-lighter><i class="icon-magnifier"></i></a> </div>
-          </div>
-          <!-- Item Name -->
-          <div class="item-name"> <a href="#.">crative lamp</a>
-            <p>Lorem ipsum dolor sit amet</p>
-          </div>
-        </div>
-        
-        <!-- Item -->
-        <div class="item"> 
-          <!-- Images --> 
-          <img class="img-1" src="images/item-img-1-6.jpg" alt=""> <img class="img-2" src="images/item-img-1-1-1.jpg" alt=""> 
-          <!-- Overlay  -->
-          <div class="overlay"> 
-            <!-- Price --> 
-            <span class="price"><small>$</small>299</span>
-            <div class="position-center-center"> <a href="images/item-img-1-6.jpg" data-lighter><i class="icon-magnifier"></i></a> </div>
-          </div>
-          <!-- Item Name -->
-          <div class="item-name"> <a href="#.">ECO FRIENDLY</a>
-            <p>Lorem ipsum dolor sit amet</p>
-          </div>
-        </div>
-        
-        <!-- Item -->
-        <div class="item"> 
-          <!-- Images --> 
-          <img class="img-1" src="images/item-img-1-7.jpg" alt=""> <img class="img-2" src="images/item-img-1-1-1.jpg" alt=""> 
-          <!-- Overlay  -->
-          <div class="overlay"> 
-            <!-- Price --> 
-            <span class="price"><small>$</small>299</span>
-            <div class="position-center-center"> <a href="images/item-img-1-7.jpg" data-lighter><i class="icon-magnifier"></i></a> </div>
-          </div>
-          <!-- Item Name -->
-          <div class="item-name"> <a href="#.">GEOMETRY STOOL</a>
-            <p>Lorem ipsum dolor sit amet</p>
-          </div>
-        </div>
-        
-        <!-- Item -->
-        <div class="item"> 
-          <!-- Images --> 
-          <img class="img-1" src="images/item-img-1-8.jpg" alt=""> <img class="img-2" src="images/item-img-1-1-1.jpg" alt=""> 
-          <!-- Overlay  -->
-          <div class="overlay"> 
-            <!-- Price --> 
-            <span class="price"><small>$</small>299</span>
-            <div class="position-center-center"> <a href="images/item-img-1-8.jpg" data-lighter><i class="icon-magnifier"></i></a> </div>
-          </div>
-          <!-- Item Name -->
-          <div class="item-name"> <a href="#.">CERAMIC STONE VASE</a>
-            <p>Lorem ipsum dolor sit amet</p>
-          </div>
-        </div>
-      </div>
     </section>
-    
-    <!-- Popular Products -->
-    <section class="padding-top-50 padding-bottom-150">
-      <div class="container"> 
-        
-        <!-- Main Heading -->
-        <div class="heading text-center">
-          <h4>popular products</h4>
-          <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec faucibus maximus vehicula. 
-          Sed feugiat, tellus vel tristique posuere, diam</span> </div>
-        
-        <!-- Popular Item Slide -->
-        <div class="papular-block block-slide"> 
-          
-          <!-- Item -->
-          <div class="item"> 
-            <!-- Item img -->
-            <div class="item-img"> <img class="img-1" src="images/product-1.jpg" alt="" > <img class="img-2" src="images/product-2.jpg" alt="" > 
-              <!-- Overlay -->
-              <div class="overlay">
-                <div class="position-center-center">
-                  <div class="inn"><a href="images/product-1.jpg" data-lighter><i class="icon-magnifier"></i></a> <a href="#." data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-basket"></i></a> <a href="#." data-toggle="tooltip" data-placement="top" title="Add To WishList"><i class="icon-heart"></i></a></div>
-                </div>
-              </div>
-            </div>
-            <!-- Item Name -->
-            <div class="item-name"> <a href="#.">stone cup</a>
-              <p>Lorem ipsum dolor sit amet</p>
-            </div>
-            <!-- Price --> 
-            <span class="price"><small>$</small>299</span> </div>
-          
-          <!-- Item -->
-          <div class="item"> 
-            <!-- Item img -->
-            <div class="item-img"> <img class="img-1" src="images/product-2.jpg" alt="" > <img class="img-2" src="images/product-2.jpg" alt="" > 
-              <!-- Overlay -->
-              <div class="overlay">
-                <div class="position-center-center">
-                  <div class="inn"><a href="images/product-2.jpg" data-lighter><i class="icon-magnifier"></i></a> <a href="#." data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-basket"></i></a> <a href="#." data-toggle="tooltip" data-placement="top" title="Add To WishList"><i class="icon-heart"></i></a></div>
-                </div>
-              </div>
-            </div>
-            <!-- Item Name -->
-            <div class="item-name"> <a href="#.">gray bag</a>
-              <p>Lorem ipsum dolor sit amet</p>
-            </div>
-            <!-- Price --> 
-            <span class="price"><small>$</small>299</span> </div>
-          
-          <!-- Item -->
-          <div class="item"> 
-            <!-- Item img -->
-            <div class="item-img"> <img class="img-1" src="images/product-3.jpg" alt="" > <img class="img-2" src="images/product-2.jpg" alt="" > 
-              <!-- Overlay -->
-              <div class="overlay">
-                <div class="position-center-center">
-                  <div class="inn"><a href="images/product-3.jpg" data-lighter><i class="icon-magnifier"></i></a> <a href="#." data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-basket"></i></a> <a href="#." data-toggle="tooltip" data-placement="top" title="Add To WishList"><i class="icon-heart"></i></a></div>
-                </div>
-              </div>
-            </div>
-            <!-- Item Name -->
-            <div class="item-name"> <a href="#.">chiar</a>
-              <p>Lorem ipsum dolor sit amet</p>
-            </div>
-            <!-- Price --> 
-            <span class="price"><small>$</small>299</span> </div>
-          
-          <!-- Item -->
-          <div class="item"> 
-            <!-- Item img -->
-            <div class="item-img"> <img class="img-1" src="images/product-4.jpg" alt="" > <img class="img-2" src="images/product-2.jpg" alt="" > 
-              <!-- Overlay -->
-              <div class="overlay">
-                <div class="position-center-center">
-                  <div class="inn"><a href="images/product-4.jpg" data-lighter><i class="icon-magnifier"></i></a> <a href="#." data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-basket"></i></a> <a href="#." data-toggle="tooltip" data-placement="top" title="Add To WishList"><i class="icon-heart"></i></a></div>
-                </div>
-              </div>
-            </div>
-            <!-- Item Name -->
-            <div class="item-name"> <a href="#.">STool</a>
-              <p>Lorem ipsum dolor sit amet</p>
-            </div>
-            <!-- Price --> 
-            <span class="price"><small>$</small>299</span> </div>
-        </div>
-      </div>
-    </section>
-    
-    <!-- Knowledge Share -->
-    <section class="light-gray-bg padding-top-150 padding-bottom-150">
-      <div class="container"> 
-        
-        <!-- Main Heading -->
-        <div class="heading text-center">
-          <h4>knowledge share</h4>
-          <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec faucibus maximus vehicula. 
-          Sed feugiat, tellus vel tristique posuere, diam</span> </div>
-        <div class="knowledge-share">
-          <ul class="row">
-            
-            <!-- Post 1 -->
-            <li class="col-md-6">
-              <div class="date"> <span>December</span> <span class="huge">27</span> </div>
-              <a href="#.">Donec commo is vulputate</a>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec faucibus maximus vehicula. Sed feugiat, tellus vel tristique posuere, diam</p>
-              <span>By <strong>Admin</strong></span> </li>
-            
-            <!-- Post 2 -->
-            <li class="col-md-6">
-              <div class="date"> <span>December</span> <span class="huge">09</span> </div>
-              <a href="#.">Donec commo is vulputate</a>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec faucibus maximus vehicula. Sed feugiat, tellus vel tristique posuere, diam</p>
-              <span>By <strong>Admin</strong></span> </li>
-          </ul>
-        </div>
-      </div>
-    </section>
-    
-    <!-- Testimonial -->
-    <section class="testimonial padding-top-100">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-6"> 
-            
-            <!-- SLide -->
-            <div class="single-slide"> 
-              
-              <!-- Slide -->
-              <div class="testi-in"> <i class="fa fa-quote-left"></i>
-                <p>Phasellus lacinia fermentum bibendum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed ullamcorper sapien lacus, eu posuere odio luctus non. Nulla lacinia, eros vel fermentum consectetur, risus p</p>
-                <h5>john smith</h5>
-              </div>
-              
-              <!-- Slide -->
-              <div class="testi-in"> <i class="fa fa-quote-left"></i>
-                <p>Phasellus lacinia fermentum bibendum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed ullamcorper sapien lacus, eu posuere odio luctus non. Nulla lacinia, eros vel fermentum consectetur, risus p</p>
-                <h5>john smith</h5>
-              </div>
-              
-              <!-- Slide -->
-              <div class="testi-in"> <i class="fa fa-quote-left"></i>
-                <p>Phasellus lacinia fermentum bibendum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed ullamcorper sapien lacus, eu posuere odio luctus non. Nulla lacinia, eros vel fermentum consectetur, risus p</p>
-                <h5>john smith</h5>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Img -->
-          <div class="col-sm-6"> <img class="img-responsive" src="images/testi-avatar.jpg" alt=""> </div>
-        </div>
-      </div>
-    </section>
-    
-    <!-- About -->
-    <section class="small-about padding-top-150 padding-bottom-150">
-      <div class="container"> 
-        
-        <!-- Main Heading -->
-        <div class="heading text-center">
-          <h4>about ecoshop</h4>
-          <p>Phasellus lacinia fermentum bibendum. Interdum et malesuada fames ac ante ipsumien lacus, eu posuere odio luctus non. Nulla lacinia,
-            eros vel fermentum consectetur, risus purus tempc, et iaculis odio dolor in ex. </p>
-        </div>
-        
-        <!-- Social Icons -->
-        <ul class="social_icons">
-          <li><a href="#."><i class="icon-social-facebook"></i></a></li>
-          <li><a href="#."><i class="icon-social-twitter"></i></a></li>
-          <li><a href="#."><i class="icon-social-tumblr"></i></a></li>
-          <li><a href="#."><i class="icon-social-youtube"></i></a></li>
-          <li><a href="#."><i class="icon-social-dribbble"></i></a></li>
-        </ul>
-      </div>
-    </section>
-    <section class="news-letter padding-top-150 padding-bottom-150">
-      <div class="container">
-        <div class="heading light-head text-center margin-bottom-30">
-          <h4>NEWSLETTER</h4>
-          <span>Phasellus lacinia fermentum bibendum. Interdum et malesuada fames ac ante ipsumien lacus, eu posuere odi </span> </div>
-        <form>
-          <input type="email" placeholder="Enter your email address" required>
-          <button type="submit">SEND ME</button>
-        </form>
-      </div>
-    </section>
-  </div>
-  
-  <!--======= FOOTER =========-->
-  <footer>
-    <div class="container"> 
-      
-      <!-- ABOUT Location -->
-      <div class="col-md-3">
-        <div class="about-footer"> <img class="margin-bottom-30" src="images/logo-foot.png" alt="" >
-          <p><i class="icon-pointer"></i> Street No. 12, Newyork 12, <br>
-            MD - 123, USA.</p>
-          <p><i class="icon-call-end"></i> 1.800.123.456789</p>
-          <p><i class="icon-envelope"></i> info@ecoshop.com</p>
-        </div>
-      </div>
-      
-      <!-- HELPFUL LINKS -->
-      <div class="col-md-3">
-        <h6>HELPFUL LINKS</h6>
-        <ul class="link">
-          <li><a href="#."> Products</a></li>
-          <li><a href="#."> Find a Store</a></li>
-          <li><a href="#."> Features</a></li>
-          <li><a href="#."> Privacy Policy</a></li>
-          <li><a href="#."> Blog</a></li>
-          <li><a href="#."> Press Kit </a></li>
-        </ul>
-      </div>
-      
-      <!-- SHOP -->
-      <div class="col-md-3">
-        <h6>SHOP</h6>
-        <ul class="link">
-          <li><a href="#."> About Us</a></li>
-          <li><a href="#."> Career</a></li>
-          <li><a href="#."> Shipping Methods</a></li>
-          <li><a href="#."> Contact</a></li>
-          <li><a href="#."> Support</a></li>
-          <li><a href="#."> Retailer</a></li>
-        </ul>
-      </div>
-      
-      <!-- MY ACCOUNT -->
-      <div class="col-md-3">
-        <h6>MY ACCOUNT</h6>
-        <ul class="link">
-          <li><a href="#."> Login</a></li>
-          <li><a href="#."> My Account</a></li>
-          <li><a href="#."> My Cart</a></li>
-          <li><a href="#."> Wishlist</a></li>
-          <li><a href="#."> Checkout</a></li>
-        </ul>
-      </div>
-      
-      <!-- Rights -->
-      
-      <div class="rights">
-        <p>©  2016 ecoshop All right reserved. </p>
-        <div class="scroll"> <a href="#wrap" class="go-up"><i class="lnr lnr-arrow-up"></i></a> </div>
-      </div>
-    </div>
-  </footer>
-  
-  <!--======= RIGHTS =========--> 
-  
-</div>
-<script src="js/jquery-1.11.3.min.js"></script> 
-<script src="js/bootstrap.min.js"></script> 
-<script src="js/own-menu.js"></script> 
-<script src="js/jquery.lighter.js"></script> 
-<script src="js/owl.carousel.min.js"></script> 
 
-<!-- SLIDER REVOLUTION 4.x SCRIPTS  --> 
-<script type="text/javascript" src="rs-plugin/js/jquery.tp.t.min.js"></script> 
-<script type="text/javascript" src="rs-plugin/js/jquery.tp.min.js"></script> 
-<script src="js/main.js"></script> 
-<script src="js/main.js"></script>
+    <section id="offers-section" class="py-16 md:py-24 bg-gray-800 border-t border-gray-700">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title text-center">Today's Hottest Offers</h2>
+            <p class="section-subtitle text-center">Grab these deals before they're gone! Perfect for boosting your creative toolkit.</p>
+            <div class="space-y-12">
+                <div class="offer-card relative">
+                    <div class="offer-badge">LAUNCH SPECIAL</div>
+                    <div class="offer-card-image-container">
+                        <img src="https://placehold.co/800x600/FACC15/111827?text=Launch+Bundle" alt="Launch Special Bundle" class="offer-card-image">
+                    </div>
+                    <div class="offer-card-content">
+                        <div>
+                            <h3 class="text-3xl font-bold text-yellow-400 mb-3 tracking-tight">New User Launch Bundle</h3>
+                            <p class="text-gray-300 mb-4 leading-relaxed">Get started with a bang! Our Launch Bundle includes the Pro Designer Suite, 500 bonus assets, and a 3-month subscription to our exclusive tutorial library. Perfect for new members!</p>
+                            <ul class="text-sm text-gray-400 space-y-1 mb-4 list-disc list-inside pl-1">
+                                <li class="ml-4"><span class="text-yellow-500 font-semibold">Includes:</span> Pro Designer Suite + Bonus Assets</li>
+                                <li class="ml-4"><span class="text-yellow-500 font-semibold">Extra:</span> 3-Month Tutorial Access</li>
+                            </ul>
+                        </div>
+                        <div class="mt-auto">
+                            <div class="flex items-baseline mb-2">
+                                <span class="text-4xl font-extrabold text-white mr-2">$79</span>
+                                <span class="text-xl text-gray-500 line-through">$129</span>
+                                <span class="ml-auto text-green-400 font-semibold">Save 38%!</span>
+                            </div>
+                            <a href="#shop-section" class="btn-claim-offer">Claim This Offer</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="offer-card relative">
+                    <div class="offer-badge bg-green-500">BEST VALUE</div>
+                     <div class="offer-card-image-container">
+                        <img src="https://placehold.co/800x600/EAB308/1F2937?text=Annual+Power+Deal" alt="Annual Power Pack Offer" class="offer-card-image">
+                    </div>
+                    <div class="offer-card-content">
+                        <div>
+                            <h3 class="text-3xl font-bold text-yellow-400 mb-3 tracking-tight">Annual All Access - 4 Months Free!</h3>
+                            <p class="text-gray-300 mb-4 leading-relaxed">Commit to a year of ultimate creative freedom with our All Access Pass and get 4 months completely free! That's a full year of every tool, asset, and update for the price of 8 months.</p>
+                             <ul class="text-sm text-gray-400 space-y-1 mb-4 list-disc list-inside pl-1">
+                                <li class="ml-4"><span class="text-yellow-500 font-semibold">Includes:</span> Full All Access Pass</li>
+                                <li class="ml-4"><span class="text-yellow-500 font-semibold">Savings:</span> Equivalent to 4 Months Free</li>
+                            </ul>
+                        </div>
+                        <div class="mt-auto">
+                            <div class="flex items-baseline mb-2">
+                                <span class="text-4xl font-extrabold text-white mr-2">$1592<span class="text-xl font-medium text-gray-400">/year</span></span>
+                                <span class="text-xl text-gray-500 line-through">$2388/year</span>
+                            </div>
+                             <a href="#shop-section" class="btn-claim-offer">Go Annual & Save Big</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing-section" class="py-16 md:py-24 bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title text-center">Flexible Plans for Every Creator</h2>
+            <p class="section-subtitle text-center">Choose a plan that fits your creative needs and budget. All plans include access to our growing library of resources.</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+                <div class="pricing-card">
+                    <h3 class="text-2xl font-bold mb-2 text-yellow-400 tracking-tight">Starter Kit</h3>
+                    <p class="text-5xl font-black mb-1 text-white">$29<span class="text-xl font-medium text-gray-400">/mo</span></p>
+                    <p class="text-gray-400 mb-6 text-sm">Perfect for hobbyists & beginners.</p>
+                    <ul class="space-y-3 text-gray-300 mb-8 flex-grow text-sm">
+                        <li class="flex items-center"><svg class="w-5 h-5 text-yellow-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Access to Basic Design Tools</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-yellow-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Starter Asset Pack</li>
+                    </ul>
+                    <a href="#shop-section" class="w-full text-center bg-gray-700 text-white font-semibold py-3 rounded-lg hover:bg-gray-600 transition duration-300 mt-auto">Choose Plan</a>
+                </div>
+                <div class="pricing-card border-2 border-yellow-500 relative">
+                    <span class="popular-badge">POPULAR</span>
+                    <h3 class="text-2xl font-bold mb-2 text-yellow-400 tracking-tight">Pro Suite</h3>
+                    <p class="text-5xl font-black mb-1 text-white">$69<span class="text-xl font-medium text-gray-400">/mo</span></p>
+                    <p class="text-gray-400 mb-6 text-sm">For serious designers & freelancers.</p>
+                    <ul class="space-y-3 text-gray-300 mb-8 flex-grow text-sm">
+                        <li class="flex items-center"><svg class="w-5 h-5 text-yellow-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Access to Advanced Design Tools</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-yellow-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Pro Asset Library</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-yellow-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Priority Support</li>
+                    </ul>
+                    <a href="#shop-section" class="w-full text-center bg-yellow-500 text-black font-bold py-3 rounded-lg hover:bg-yellow-600 transition duration-300 mt-auto transform hover:scale-105">Choose Pro Suite</a>
+                </div>
+                 <div class="pricing-card">
+                    <h3 class="text-2xl font-bold mb-2 text-yellow-400 tracking-tight">Agency Pack</h3>
+                    <p class="text-5xl font-black mb-1 text-white">$149<span class="text-xl font-medium text-gray-400">/mo</span></p>
+                    <p class="text-gray-400 mb-6 text-sm">For teams & creative agencies.</p>
+                    <ul class="space-y-3 text-gray-300 mb-8 flex-grow text-sm">
+                        <li class="flex items-center"><svg class="w-5 h-5 text-yellow-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Full Software Suite</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-yellow-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Team Collaboration Tools</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-yellow-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Dedicated Support</li>
+                    </ul>
+                    <a href="#shop-section" class="w-full text-center bg-gray-700 text-white font-semibold py-3 rounded-lg hover:bg-gray-600 transition duration-300 mt-auto">Choose Agency</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials-section" class="py-16 md:py-24 bg-gray-800 border-t border-gray-700">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title text-center">Loved by Creators Worldwide</h2>
+            <p class="section-subtitle text-center">Hear what our satisfied users have to say about AH GRAPHIX TOOLS.</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+                 <div class="testimonial-card">
+                    <div class="flex items-center mb-4">
+                        <img src="https://placehold.co/60x60/FACC15/111827?text=JS" alt="User Avatar Jane S." class="w-16 h-16 rounded-full mr-5 border-2 border-yellow-500 object-cover">
+                        <div>
+                            <p class="font-bold text-lg text-white">Jane S.</p>
+                            <p class="text-sm text-yellow-400">Freelance Graphic Designer</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic leading-relaxed">"AH GRAPHIX TOOLS has revolutionized my workflow! The sheer amount of quality assets and access to pro software at this price is unbelievable. My productivity has skyrocketed!"</p>
+                </div>
+                <div class="testimonial-card">
+                     <div class="flex items-center mb-4">
+                        <img src="https://placehold.co/60x60/FDE047/1F2937?text=MD" alt="User Avatar Mike D." class="w-16 h-16 rounded-full mr-5 border-2 border-yellow-500 object-cover">
+                        <div>
+                            <p class="font-bold text-lg text-white">Mike D.</p>
+                            <p class="text-sm text-yellow-400">Small Agency Owner</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic leading-relaxed">"Switching to AH GRAPHIX TOOLS for my agency was the best decision. The team collaboration features and the Agency Pack are perfect for us. Plus, the support is top-notch!"</p>
+                </div>
+                <div class="testimonial-card">
+                     <div class="flex items-center mb-4">
+                        <img src="https://placehold.co/60x60/FBBF24/111827?text=AL" alt="User Avatar Alex L." class="w-16 h-16 rounded-full mr-5 border-2 border-yellow-500 object-cover">
+                        <div>
+                            <p class="font-bold text-lg text-white">Alex L.</p>
+                            <p class="text-sm text-yellow-400">YouTuber & Content Creator</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic leading-relaxed">"From video editing tools to thumbnail templates, this platform has it all. The All Access Pass is incredible value. My content quality has visibly improved."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="login-section" class="py-24 md:py-32 bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="auth-card">
+                <h1 class="text-3xl font-bold text-white text-center mb-3">Welcome Back!</h1>
+                <p class="text-center text-gray-400 mb-8">Sign in to access your creative arsenal.</p>
+                <form id="loginForm" method="POST">
+                    <div class="mb-6">
+                        <label for="loginEmail" class="form-label">Email Address</label>
+                        <input type="email" id="loginEmail" name="email" required class="form-input" placeholder="you@example.com">
+                        <p id="loginEmailError" class="text-red-400 text-xs mt-1 hidden">Please enter a valid email.</p>
+                    </div>
+                    <div class="mb-6">
+                        <div class="flex justify-between items-center mb-1">
+                            <label for="loginPassword" class="form-label">Password</label>
+                            <a href="#" class="text-xs text-yellow-500 hover:text-yellow-400 transition">Forgot password?</a>
+                        </div>
+                        <input type="password" id="loginPassword" name="password" required class="form-input" placeholder="Enter your password">
+                        <p id="loginPasswordError" class="text-red-400 text-xs mt-1 hidden">Password is required.</p>
+                    </div>
+                    <div class="mb-8">
+                        <button type="submit" class="btn-submit">Sign In</button>
+                    </div>
+                    <div id="loginFormError" class="text-red-400 text-sm text-center mb-4 hidden"></div>
+                </form>
+                <p class="text-center text-sm text-gray-400">
+                    Not a member yet?
+                    <a href="#signup-section" class="font-medium text-yellow-400 hover:text-yellow-300 underline">Sign up now</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="signup-section" class="py-24 md:py-32 bg-gray-800 border-t border-gray-700">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="auth-card">
+                <h1 class="text-3xl font-bold text-white text-center mb-3">Create Your Account</h1>
+                <p class="text-center text-gray-400 mb-8">Join our community of creators!</p>
+                <form id="signupForm" method="POST">
+                    <div class="mb-5">
+                        <label for="signupUsername" class="form-label">Username</label>
+                        <input type="text" id="signupUsername" name="username" required class="form-input" placeholder="Choose a username">
+                        <p id="signupUsernameError" class="text-red-400 text-xs mt-1 hidden">Username is required (min 3 chars).</p>
+                    </div>
+                    <div class="mb-5">
+                        <label for="signupEmail" class="form-label">Email Address</label>
+                        <input type="email" id="signupEmail" name="email" required class="form-input" placeholder="you@example.com">
+                        <p id="signupEmailError" class="text-red-400 text-xs mt-1 hidden">Please enter a valid email.</p>
+                    </div>
+                    <div class="mb-5">
+                        <label for="signupPassword" class="form-label">Password</label>
+                        <input type="password" id="signupPassword" name="password" required class="form-input" placeholder="Create a strong password">
+                        <p id="signupPasswordError" class="text-red-400 text-xs mt-1 hidden">Password must be at least 8 characters.</p>
+                    </div>
+                    <div class="mb-6">
+                        <label for="signupConfirmPassword" class="form-label">Confirm Password</label>
+                        <input type="password" id="signupConfirmPassword" name="confirmPassword" required class="form-input" placeholder="Re-enter your password">
+                        <p id="signupConfirmPasswordError" class="text-red-400 text-xs mt-1 hidden">Passwords do not match.</p>
+                    </div>
+                    <div class="mb-8">
+                        <button type="submit" class="btn-submit">Create Account</button>
+                    </div>
+                     <div id="signupFormError" class="text-red-400 text-sm text-center mb-4 hidden"></div>
+                </form>
+                <p class="text-center text-sm text-gray-400">
+                    Already have an account?
+                    <a href="#login-section" class="font-medium text-yellow-400 hover:text-yellow-300 underline">Sign In</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 md:py-24 bg-yellow-500 text-black">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl sm:text-5xl font-extrabold mb-6 tracking-tight">Ready to Elevate Your Designs?</h2>
+            <p class="text-lg sm:text-xl text-gray-800 mb-10 max-w-2xl mx-auto">Join thousands of creators who trust AH GRAPHIX TOOLS. Start your creative journey today!</p>
+            <a href="#shop-section" class="bg-black text-yellow-400 text-lg font-bold px-12 py-4 rounded-lg hover:bg-gray-800 transition-all duration-300 shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-black focus:ring-opacity-50">Explore Packages & Sign Up</a>
+        </div>
+    </section>
+
+    <footer class="bg-black text-gray-400 py-12 border-t border-gray-700">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <a href="#hero-section" class="text-3xl font-extrabold text-yellow-400 mb-4 inline-block">AH GRAPHIX TOOLS</a>
+            <p class="text-sm mb-6 max-w-md mx-auto">Empowering creators with professional-grade graphics tools and assets.</p>
+            <div class="mb-6 space-x-6">
+                <a href="#" class="hover:text-yellow-400 transition duration-300">Privacy Policy</a>
+                <a href="#" class="hover:text-yellow-400 transition duration-300">Terms of Service</a>
+                <a href="#" class="hover:text-yellow-400 transition duration-300">Contact Us</a>
+            </div>
+            <p class="text-xs">&copy; <span id="currentYear"></span> AH GRAPHIX TOOLS. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
 </body>
 </html>
