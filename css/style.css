@@ -21,6 +21,7 @@ body {
     flex-direction: column;
     position: relative;
     z-index: 0;
+    padding-top: 6rem; /
 }
 
 /* Snowfall Canvas */
