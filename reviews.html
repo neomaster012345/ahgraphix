@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Reviews - AH Graphix Store</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- INLINE CSS FOR MASTERPIECE DESIGN -->
+    <style>
+   /* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+}
+
+body {
+    background: radial-gradient(circle at center, #1f1f1f 0%, #121212 100%);
+    color: white;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 0;
+}
+
+/* Snowfall Canvas */
+#snowCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1; /* Ensure canvas is in the background */
+}
+
+/* Main Container - Positioned above the snowfall canvas */
+.container {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 1.5rem;
+    flex-grow: 1;
+}
+
+/* Gold Gradient Text Utility */
+.gold-gradient-text {
+   
+    background: linear-gradient(135deg, #FFD700, #D4AF37);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* Glassmorphism Effects */
+.glass-card {
+    background: rgba(18, 18, 18, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.glass-nav {
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+/* General Purpose Glow Button */
+.glow-button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background: linear-gradient(to right, #FFD700, #DAA520, #B8860B);
+    color: #1a1a1a;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+    font-weight: 700;
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+.glow-button:hover {
+    box-shadow: 0 15px 40px rgba(255, 215, 0, 0.8);
+    transform: translateY(-5px);
+    background: linear-gradient(to right, #B8860B, #DAA520, #FFD700);
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255,255,255,0.8);
+}
+
+.glow-button::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transform: rotate(45deg);
+    transition: all 0.5s ease;
+    opacity: 0;
+}
+
+.glow-button:hover::after {
+    animation: glowEffect 1.5s infinite;
+    opacity: 1;
+}
+
+@keyframes glowEffect {
+    0% { transform: rotate(45deg) translateX(-100%); }
+    100% { transform: rotate(45deg) translateX(100%); }
+}
+/* Top Navigation Links */
+.nav-link {
+    position: relative;
+    display: inline-block;
+    font-weight: 500;
+    padding-bottom: 0.25rem;
+    color: #fff;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+}
+.nav-link:hover {
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+}
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #FFD700, transparent);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+.nav-link:hover::after {
+    transform: scaleX(1);
+}
+
+        /* Hero Section Animation */
+        @keyframes slide-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-slide-in-up {
+            animation: slide-in-up 0.8s ease-out forwards;
+        }
+
+        /* --- Infinite Scroller Masterpiece Design --- */
+        .scroller {
+            max-width: 100%; /* Use full width for a more expansive feel */
+            margin: 1.5rem 0;
+        }
+
+        .scroller[data-animated="true"] {
+            overflow: hidden;
+            -webkit-mask: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
+            mask: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
+        }
+
+        .scroller[data-animated="true"] .scroller__inner {
+            width: max-content;
+            flex-wrap: nowrap;
+            animation: scroll var(--_animation-duration, 40s) var(--_animation-direction, forwards) linear infinite;
+        }
+
+        .scroller__inner {
+            padding-block: 1rem;
+            display: flex;
+            gap: 2rem; /* Increased gap for more breathing room */
+        }
+
+        .scroller[data-direction="right"] {
+            --_animation-direction: reverse;
+        }
+
+        .scroller[data-direction="left"] {
+            --_animation-direction: forwards;
+        }
+
+        .scroller[data-speed="fast"] {
+            --_animation-duration: 30s;
+        }
+
+        .scroller[data-speed="slow"] {
+            --_animation-duration: 60s;
+        }
+
+        .scroller__inner:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll {
+            to {
+                transform: translate(calc(-50% - 1rem)); /* 1rem is half the gap */
+            }
+        }
+
+        .scroller__inner img {
+            height: 320px; /* INCREASED IMAGE SIZE */
+            width: auto;
+            max-width: none;
+            border-radius: 12px;
+            border: 4px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .scroller__inner img:hover {
+            transform: scale(1.05);
+            border-color: rgba(255, 215, 0, 0.9);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.4);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Image Modal Styles */
+        #imageModal {
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Snowfall Canvas (positioned behind content) -->
+    <canvas id="snowCanvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="glass-nav fixed top-0 w-full z-50 py-4 px-6 md:px-12">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center">
+                <!-- Logo -->
+                <div class="mr-4" style="position: relative; width: 60px; height: 0; padding-top: 50.297%; padding-bottom: 0; overflow: hidden; border-radius: 8px;">
+                    <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+                        src="https://www.canva.com/design/DAGiFZ9rPh0/U5QWRhXXT8u2SCZWftDt_A/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
+                    </iframe>
+                </div>
+                <h1 class="text-xl md:text-2xl font-bold gold-gradient-text">AH Graphix Store</h1>
+            </div>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="index.html" class="nav-link gold-gradient-text transition-colors">Home</a>
+                <a href="shop.html" class="nav-link text-white hover:gold-gradient-text transition-colors">Shop</a>
+                <a href="offers.html" class="nav-link active gold-gradient-text transition-colors">Offers</a>
+                <a href="reviews.html" class="nav-link text-white hover:gold-gradient-text transition-colors">Reviews</a>
+                <a href="about_us.html" class="nav-link text-white hover:gold-gradient-text transition-colors">About Us</a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <button class="glow-button gold-gradient text-black px-4 py-2 rounded-full font-medium">
+                    <span class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        Cart
+                    </span>
+                </button>
+                <button class="md:hidden" id="mobile-menu-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="fixed top-16 left-0 w-full bg-black bg-opacity-95 z-40 hidden" id="mobile-menu">
+        <div class="container mx-auto py-4 px-6 flex flex-col space-y-4">
+            <a href="index.html" class="text-white hover:text-gold py-2 border-b border-gray-800">Home</a>
+            <a href="shop.html" class="text-white hover:text-gold py-2 border-b border-gray-800">Shop</a>
+                         <a href="offers.html" class="text-white hover:text-gold py-2 border-b border-gray-800">Offers</a>
+
+            <a href="reviews.html" class="text-white hover:text-gold py-2 border-b border-gray-800">Reviews</a>
+            <a href="about_us.html" class="text-white hover:text-gold py-2">About Us</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="pt-24">
+        <!-- Hero Section -->
+        <section class="py-16 text-center">
+            <div class="container mx-auto px-6">
+                <h1 class="text-5xl md:text-7xl font-bold mb-4 animate-slide-in-up" style="animation-delay: 0.2s;">
+                    <span class="gold-gradient-text">A Wall of</span> Appreciation
+                </h1>
+                <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto animate-slide-in-up" style="animation-delay: 0.4s;">
+                    Our success is reflected in the satisfaction of our customers. Here’s a glimpse of the positive feedback that fuels our passion.
+                </p>
+            </div>
+        </section>
+
+        <!-- Scrolling Gallery Section -->
+        <section class="py-12 overflow-hidden">
+            <div class="scroller" data-direction="left" data-speed="fast">
+                <div class="scroller__inner">
+                    <img src="images/1.png" alt="Customer Review 1"/>
+                    <img src="images/2.png" alt="Customer Review 2"/>
+                    <img src="images/3.png" alt="Customer Review 3"/>
+                    <img src="images/4.png" alt="Customer Review 4"/>
+                    <img src="images/5.png" alt="Customer Review 5"/>
+                </div>
+            </div>
+            <div class="scroller" data-direction="right" data-speed="slow">
+                <div class="scroller__inner">
+                    <img src="images/6.jpeg" alt="Customer Review 6"/>
+                    <img src="images/7.jpeg" alt="Customer Review 7"/>
+                    <img src="images/8.jpeg" alt="Customer Review 8"/>
+                    <img src="images/9.jpeg" alt="Customer Review 9"/>
+                    <img src="images/10.jpeg" alt="Customer Review 10"/>
+                </div>
+            </div>
+        </section>
+        
+    
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black py-8 text-center text-gray-400 text-sm mt-auto">
+        <div class="container mx-auto px-6">
+            <p>&copy; 2025 AH Graphix Store. All rights reserved.</p>
+            <p class="mt-2">Designed with ❤️ by AH Graphix Team</p>
+        </div>
+    </footer>
+    
+    <!-- Image Modal -->
+    <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm z-[100] hidden items-center justify-center p-4 opacity-0">
+        <span id="closeModal" class="absolute top-4 right-6 text-white text-5xl font-bold cursor-pointer hover:text-yellow-400 transition-colors">&times;</span>
+        <img class="max-w-[90vw] max-h-[90vh] rounded-lg shadow-2xl shadow-yellow-500/20" id="modalImage">
+    </div>
+
+    <script>
+        window.onload = function() {
+            // --- Infinite Scroller Logic ---
+            const scrollers = document.querySelectorAll(".scroller");
+
+            if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+                addAnimation();
+            }
+
+            function addAnimation() {
+                scrollers.forEach((scroller) => {
+                    scroller.setAttribute("data-animated", true);
+                    const scrollerInner = scroller.querySelector(".scroller__inner");
+                    const scrollerContent = Array.from(scrollerInner.children);
+
+                    scrollerContent.forEach((item) => {
+                        const duplicatedItem = item.cloneNode(true);
+                        duplicatedItem.setAttribute("aria-hidden", true);
+                        scrollerInner.appendChild(duplicatedItem);
+                    });
+                });
+            }
+            
+            // --- Image Modal Logic ---
+            const modal = document.getElementById('imageModal');
+            if (modal) {
+                const modalImg = document.getElementById('modalImage');
+                const closeModal = document.getElementById('closeModal');
+
+                document.querySelectorAll('.scroller__inner img').forEach(img => {
+                    img.onclick = function(){
+                        modal.style.display = "flex";
+                        setTimeout(() => modal.style.opacity = 1, 10); // Fade in
+                        modalImg.src = this.src;
+                    }
+                });
+                
+                const closeTheModal = () => {
+                    modal.style.opacity = 0;
+                    setTimeout(() => modal.style.display = "none", 300); // Wait for fade out
+                }
+
+                closeModal.onclick = closeTheModal;
+
+                modal.onclick = function(event) {
+                    if (event.target === modal) {
+                        closeTheModal();
+                    }
+                }
+            }
+        };
+    </script>
+      <script src="js/main.js"></script>
+
+</body>
+</html>

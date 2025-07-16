@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offers - AH Graphix Store</title>
+    <!-- Poppins Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <style>
+        /* Base Styles from your main CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: radial-gradient(circle at center, #1f1f1f 0%, #121212 100%);
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 0;
+        }
+
+        #snowCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 1.5rem;
+            flex-grow: 1;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #FFD700, #D4AF37);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .glass-nav {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .glow-button {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: linear-gradient(to right, #FFD700, #DAA520, #B8860B);
+            color: #1a1a1a;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+            font-weight: 700;
+        }
+
+        .glow-button:hover {
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.8);
+            transform: translateY(-5px);
+            background: linear-gradient(to right, #B8860B, #DAA520, #FFD700);
+            color: #fff;
+        }
+        
+        .nav-link {
+            position: relative;
+            display: inline-block;
+            font-weight: 500;
+            padding-bottom: 0.25rem;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-link:hover {
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #FFD700, transparent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover::after, .nav-link.active::after {
+            transform: scaleX(1);
+        }
+        
+        .nav-link.active {
+            color: #FFD700;
+        }
+
+        /* Page-specific styles for Offer Cards */
+        .offer-card {
+            background: #222222;
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%; /* Make cards in a row equal height */
+        }
+
+        .offer-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.95);
+            border-color: rgba(255, 215, 0, 0.9);
+        }
+        
+        .offer-card .plan-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .offer-tag {
+            background: linear-gradient(135deg, #FFD700, #D4AF37);
+            color: #121212;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin: 0.5rem 0;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0.5rem 0;
+        }
+        
+        .price-duration {
+            font-size: 1rem;
+            color: #aaa;
+        }
+
+        .tools-list {
+            text-align: left;
+            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+            color: #ccc;
+            flex-grow: 1; /* Pushes the button to the bottom */
+        }
+        
+        .tools-list ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .tools-list li {
+            padding: 0.4rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .tools-list li::before {
+            content: '\f00c'; /* Font Awesome checkmark */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: #FFD700;
+            margin-right: 0.75rem;
+        }
+        
+        .tools-list strong {
+            color: #FFD700;
+            display: block;
+            margin-top: 1rem;
+            font-size: 1.1rem;
+        }
+
+
+    </style>
+</head>
+<body>
+    <!-- Snowfall Canvas -->
+    <canvas id="snowCanvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="glass-nav fixed top-0 w-full z-50 py-4 px-6 md:px-12">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center">
+                <!-- Logo -->
+                <div class="mr-4" style="position: relative; width: 60px; height: 0; padding-top: 50.297%; padding-bottom: 0; overflow: hidden; border-radius: 8px;">
+                    <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+                        src="https://www.canva.com/design/DAGiFZ9rPh0/U5QWRhXXT8u2SCZWftDt_A/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
+                    </iframe>
+                </div>
+                <h1 class="text-xl md:text-2xl font-bold gold-gradient-text">AH Graphix Store</h1>
+            </div>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="index.html" class="nav-link text-white hover:gold-gradient-text transition-colors">Home</a>
+                <a href="shop.html" class="nav-link text-white hover:gold-gradient-text transition-colors">Shop</a>
+                <a href="reviews.html" class="nav-link text-white hover:gold-gradient-text transition-colors">Reviews</a>
+                <a href="about_us.html" class="nav-link text-white hover:gold-gradient-text transition-colors">About Us</a>
+                <a href="offers.html" class="nav-link active gold-gradient-text transition-colors">Offers</a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <button class="glow-button gold-gradient text-black px-4 py-2 rounded-full font-medium">
+                    <span class="flex items-center">
+                        <i class="fas fa-shopping-cart mr-1"></i> Cart
+                    </span>
+                </button>
+                <button class="md:hidden" id="mobile-menu-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="fixed top-16 left-0 w-full bg-black bg-opacity-95 z-40 hidden" id="mobile-menu">
+        <div class="container mx-auto py-4 px-6 flex flex-col space-y-4">
+            <a href="index.html" class="text-white hover:text-gold py-2 border-b border-gray-800">Home</a>
+            <a href="shop.html" class="text-white hover:text-gold py-2 border-b border-gray-800">Shop</a>
+            <a href="reviews.html" class="text-white hover:text-gold py-2 border-b border-gray-800">Reviews</a>
+            <a href="about_us.html" class="text-white hover:text-gold py-2 border-b border-gray-800">About Us</a>
+            <a href="offers.html" class="text-white hover:text-gold py-2">Offers</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="pt-32 pb-20">
+        <section id="offers-page" class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                 <h1 class="text-5xl md:text-7xl font-bold mb-4">
+                    <span class="gold-gradient-text">Our Exclusive Offers</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+                    Choose the perfect toolkit to supercharge your workflow. We've curated these plans to provide maximum value for every need.
+                </p>
+            </div>
+
+            <!-- Offers Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+                
+                <!-- Basic Plan -->
+                <div class="offer-card">
+                    <h2 class="plan-name gold-gradient-text">Basic Plan</h2>
+                    <span class="offer-tag">OFFER</span>
+                    <p class="price">Rs 750</p>
+                    <p class="price-duration">Monthly</p>
+                    <div class="tools-list">
+                        <ul>
+                            <li>Semrush Unlimited</li>
+                            <li>Canva Premium</li>
+                            <li>SE Ranking SEO TOOL</li>
+                            <li>WEB CEO for website audit</li>
+                            <li>Answer The Public</li>
+                        </ul>
+                    </div>
+                    <a href="https://wa.me/923268600994?text=I'm%20interested%20in%20the%20'Basic%20Plan'.%20Please%20provide%20more%20details." class="glow-button mt-auto">Get Started</a>
+                </div>
+
+                <!-- SEO Experts Plan -->
+                <div class="offer-card">
+                    <h2 class="plan-name gold-gradient-text">SEO Experts Plan</h2>
+                    <span class="offer-tag">OFFER</span>
+                    <p class="price">Rs 1000</p>
+                    <p class="price-duration">Monthly</p>
+                    <div class="tools-list">
+                        <ul>
+                            <li>Semrush Premium Unlimited</li>
+                            <li>Moz Pro</li>
+                            <li>Ubersuggest Unlimited</li>
+                            <li>SE Ranking</li>
+                            <li>WEB CEO</li>
+                            <li>answerthepublic</li>
+                        </ul>
+                    </div>
+                     <a href="https://wa.me/923268600994?text=I'm%20interested%20in%20the%20'SEO%20Experts%20Plan'.%20Please%20provide%20more%20details." class="glow-button mt-auto">Get Started</a>
+                </div>
+
+                <!-- Student Plan -->
+                <div class="offer-card">
+                    <h2 class="plan-name gold-gradient-text">Student Plan</h2>
+                    <span class="offer-tag">OFFER</span>
+                    <p class="price">Rs 1250</p>
+                    <p class="price-duration">Monthly</p>
+                    <div class="tools-list">
+                        <ul>
+                            <li>Semrush Premium Unlimited</li>
+                            <li>Moz Pro Unlimited</li>
+                            <li>Ubersuggest Unlimited</li>
+                            <li>Grammarly Premium Unlimited</li>
+                            <li>SE Ranking</li>
+                            <li>Canva Premium</li>
+                            <li>Closerscopy Unlimited</li>
+                        </ul>
+                    </div>
+                     <a href="https://wa.me/923268600994?text=I'm%20interested%20in%20the%20'Student%20Plan'.%20Please%20provide%20more%20details." class="glow-button mt-auto">Get Started</a>
+                </div>
+                
+                <!-- Content Writer Plan -->
+                <div class="offer-card">
+                    <h2 class="plan-name gold-gradient-text">Content Writer Plan</h2>
+                    <p class="price">Rs 1950</p>
+                    <p class="price-duration">Monthly</p>
+                    <div class="tools-list">
+                        <strong>TOOLS INCLUDED</strong>
+                        <ul>
+                           <li>Chatgpt Premium (Plus Plan)</li>
+                           <li>Writehuman Unlimited</li>
+                           <li>Closerscopy Premium Unlimited</li>
+                           <li>Grammarly Premium Unlimited</li>
+                           <li>Canva Premium</li>
+                           <li>Hemingway Premium</li>
+                        </ul>
+                    </div>
+                     <a href="https://wa.me/923268600994?text=I'm%20interested%20in%20the%20'Content%20Writer%20Plan'.%20Please%20provide%20more%20details." class="glow-button mt-auto">Get Started</a>
+                </div>
+
+                <!-- Bloggers Plan -->
+                <div class="offer-card">
+                    <h2 class="plan-name gold-gradient-text">Bloggers Plan</h2>
+                    <span class="offer-tag">OFFER</span>
+                    <p class="price">Rs 1950</p>
+                    <p class="price-duration">Monthly</p>
+                    <div class="tools-list">
+                        <strong>SEO Tools:</strong>
+                        <ul>
+                            <li>Semrush Premium Unlimited</li>
+                            <li>Moz Pro</li>
+                            <li>Ubersuggest Unlimited</li>
+                            <li>SE Ranking</li>
+                        </ul>
+                        <strong>Writing Tools:</strong>
+                        <ul>
+                            <li>Grammarly Premium</li>
+                            <li>Chatgpt Premium</li>
+                            <li>Writehuman</li>
+                            <li>Closerscopy Unlimited</li>
+                        </ul>
+                         <strong>Graphic Designing Tool:</strong>
+                        <ul>
+                            <li>Canva Premium</li>
+                        </ul>
+                    </div>
+                     <a href="https://wa.me/923268600994?text=I'm%20interested%20in%20the%20'Bloggers%20Plan'.%20Please%20provide%20more%20details." class="glow-button mt-auto">Get Started</a>
+                </div>
+
+                <!-- Agency Plan -->
+                <div class="offer-card">
+                    <h2 class="plan-name gold-gradient-text">Agency Plan</h2>
+                    <span class="offer-tag">OFFER</span>
+                    <p class="price">Rs 2850</p>
+                    <p class="price-duration">Monthly</p>
+                    <div class="tools-list">
+                        <strong>SEO Tools:</strong>
+                        <ul>
+                            <li>Semrush Premium Unlimited</li>
+                            <li>Moz Pro Unlimited</li>
+                            <li>Ubersuggest Unlimited</li>
+                            <li>Answerthepublic Unlimited</li>
+                            <li>SE Ranking</li>
+                            <li>Web CEO</li>
+                        </ul>
+                        <strong>Content Writing Tools:</strong>
+                        <ul>
+                            <li>Chatgpt Premium</li>
+                            <li>Grammarly Premium Unlimited</li>
+                            <li>Closerscopy Unlimited</li>
+                            <li>Writehuman Unlimited</li>
+                            <li>Hemingway Editor</li>
+                        </ul>
+                        <strong>Graphic Designing Tools:</strong>
+                        <ul>
+                             <li>Canva</li>
+                             <li>VistaCreate</li>
+                             <li>Coursera</li>
+                        </ul>
+                    </div>
+                     <a href="https://wa.me/923268600994?text=I'm%20interested%20in%20the%20'Agency%20Plan'.%20Please%20provide%20more%20details." class="glow-button mt-auto">Get Started</a>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black py-8 text-center text-gray-400 text-sm">
+        <div class="container mx-auto px-6">
+            <p>&copy; 2025 AH Graphix Store. All rights reserved.</p>
+            <p class="mt-2">Designed with ❤️ by AH Graphix Team</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Mobile Menu and Snowfall -->
+    <script src="js/main.js"></script>
+</body>
+</html>
