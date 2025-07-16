@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AH Graphix Store - About Us</title>
+    <title>About Us - AH Graphix Store</title>
     <!-- Poppins Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Tailwind CSS CDN -->
@@ -33,8 +33,7 @@
             <div class="hidden md:flex space-x-8">
                 <a href="index.html" class="nav-link text-white hover:gold-gradient-text transition-colors">Home</a>
                 <a href="shop.html" class="nav-link text-white hover:gold-gradient-text transition-colors">Shop</a>
-                                 <a href="offers.html" class="nav-link text-white hover:gold-gradient-text transition-colors">Offers</a>
-
+                <a href="offers.html" class="nav-link text-white hover:gold-gradient-text transition-colors">Offers</a>
                 <a href="reviews.html" class="nav-link text-white hover:gold-gradient-text transition-colors">Reviews</a>
                 <a href="about_us.html" class="nav-link gold-gradient-text transition-colors">About Us</a>
             </div>
@@ -62,27 +61,70 @@
         <div class="container mx-auto py-4 px-6 flex flex-col space-y-4">
             <a href="index.html" class="text-white hover:text-gold py-2 border-b border-gray-800">Home</a>
             <a href="shop.html" class="text-white hover:text-gold py-2 border-b border-gray-800">Shop</a>
-                         <a href="offers.html" class="text-white hover:text-gold py-2 border-b border-gray-800">Offers</a>
-
+            <a href="offers.html" class="text-white hover:text-gold py-2 border-b border-gray-800">Offers</a>
             <a href="reviews.html" class="text-white hover:text-gold py-2 border-b border-gray-800">Reviews</a>
             <a href="about_us.html" class="text-white hover:text-gold py-2">About Us</a>
         </div>
     </div>
 
     <!-- ABOUT US SECTION -->
-    <section id="about-us-content" class="py-16 bg-darkGray min-h-screen flex items-center justify-center pt-24">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold mb-8 slide-in">
-                <span class="gold-gradient-text">About</span> Us
-            </h2>
-            <p class="text-lg text-gray-300 max-w-2xl mx-auto">
-                AH Graphix Store is dedicated to providing premium digital tools to empower creators, businesses, and individuals. We believe in unlocking potential through cutting-edge technology and exceptional service.
-            </p>
-            <p class="text-lg text-gray-300 mt-4 max-w-2xl mx-auto">
-                Our mission is to be your trusted partner in the digital world, offering a curated selection of tools that meet the highest standards of quality and performance.
-            </p>
-        </div>
-    </section>
+    <main class="pt-32 pb-20">
+        <section id="about" class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                 <h1 class="text-5xl md:text-7xl font-bold mb-4">
+                    <span class="gold-gradient-text">About AH Graphix</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+                    Your one-stop destination for premium digital tools and creative services.
+                </p>
+            </div>
+
+            <!-- Profile and Mission Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center mb-20">
+                <!-- CEO Profile Card -->
+                <div class="lg:col-span-1 flex flex-col items-center text-center">
+                    <img src="https://placehold.co/400x400/121212/FFD700?text=Ali" alt="CEO Ali" class="w-64 h-64 rounded-full border-4 border-gold object-cover shadow-lg mb-6">
+                    <h3 class="text-3xl font-bold">Ali</h3>
+                    <p class="text-gold text-lg">CEO & Founder</p>
+                    <p class="text-gray-400 mt-1"><i class="fas fa-map-marker-alt mr-2"></i>Islamabad</p>
+                </div>
+                
+                <!-- Mission and Vision -->
+                <div class="lg:col-span-2">
+                    <h2 class="text-3xl font-bold mb-4 gold-gradient-text">Our Mission</h2>
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        At AH Graphix, our mission is to empower creators, entrepreneurs, and businesses by providing accessible, high-quality digital tools and expert design services. We believe that everyone deserves the resources to bring their vision to life, and we are dedicated to being the catalyst for your creative and professional success.
+                    </p>
+                    <h2 class="text-3xl font-bold mb-4 gold-gradient-text">Our Expertise</h2>
+                     <div class="flex flex-wrap gap-4">
+                        <span class="bg-lightGray text-white px-4 py-2 rounded-full text-sm font-medium">Graphics Designing</span>
+                        <span class="bg-lightGray text-white px-4 py-2 rounded-full text-sm font-medium">Web Designing</span>
+                        <span class="bg-lightGray text-white px-4 py-2 rounded-full text-sm font-medium">Facebook Ad Master</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact and Social Media Section -->
+            <div class="text-center bg-darkGray/50 border border-gray-700 rounded-2xl p-10">
+                <h2 class="text-3xl font-bold mb-6 gold-gradient-text">Connect With Us</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto mb-8">
+                    Have a question or a project in mind? We're here to help. Reach out to us through any of our channels.
+                </p>
+                <div class="flex justify-center items-center flex-wrap gap-6">
+                    <a href="https://wa.me/923268600994" target="_blank" class="glow-button bg-green-600 hover:bg-green-500 text-white px-6 py-3 rounded-full font-bold text-lg flex items-center justify-center transition-all">
+                        <i class="fab fa-whatsapp mr-3 text-2xl"></i> WhatsApp
+                    </a>
+                     <a href="https://wa.me/923709344894" target="_blank" class="glow-button bg-gray-600 hover:bg-gray-500 text-white px-6 py-3 rounded-full font-bold text-lg flex items-center justify-center transition-all">
+                        <i class="fab fa-whatsapp mr-3 text-2xl"></i> Backup WhatsApp
+                    </a>
+                    <a href="https://www.facebook.com/ahgraphics788" target="_blank" class="glow-button bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-full font-bold text-lg flex items-center justify-center transition-all">
+                        <i class="fab fa-facebook-f mr-3 text-2xl"></i> Facebook Page
+                    </a>
+                </div>
+            </div>
+
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer class="bg-black py-8 text-center text-gray-400 text-sm">
@@ -94,5 +136,6 @@
 
     <!-- JavaScript for shared functionality -->
     <script src="js/main.js"></script>
+
 </body>
 </html>
