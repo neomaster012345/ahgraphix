@@ -1,9 +1,9 @@
 /**
  * JavaScript for AH Graphix Store - Authentication
- * Handles all Firebase authentication logic.
+ * Handles Email/Password, Google, and Anonymous sign-in,
+ * and the redesigned signup page flow.
  */
 
-// Import the functions you need from the Firebase SDKs
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 import { 
     getAuth, 
@@ -13,12 +13,11 @@ import {
     updateProfile,
     signInWithPopup,
     GoogleAuthProvider,
-    FacebookAuthProvider,
     sendPasswordResetEmail,
+    signInAnonymously,
     signOut
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
-// This event listener ensures the HTML document is ready before the script runs.
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- Firebase Configuration ---
@@ -36,32 +35,38 @@ document.addEventListener('DOMContentLoaded', () => {
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const googleProvider = new GoogleAuthProvider();
-    const facebookProvider = new FacebookAuthProvider();
 
     // --- UI Element References ---
     const navAuthSection = document.getElementById('nav-auth-section');
     const loginForm = document.getElementById('login-form');
-    // ... (add other form references as needed inside their specific logic blocks)
+    const signupForm = document.getElementById('signup-form');
+    const googleLoginBtn = document.getElementById('google-login-btn');
+    const forgotPasswordModal = document.getElementById('forgot-password-modal');
+    
+    // --- NEW: References for the redesigned signup page ---
+    const signupOptions = document.getElementById('signup-options');
+    const emailSignupBtn = document.getElementById('email-signup-btn');
+    const anonymousLoginBtn = document.getElementById('anonymous-login-btn');
 
-    // --- Authentication State Observer (Updates the Nav Bar) ---
+    // --- Authentication State Observer ---
     onAuthStateChanged(auth, (user) => {
         if (navAuthSection) {
-            if (user) {
-                // User is signed in
+            if (user && !user.isAnonymous) {
+                // User is signed in (and not anonymous)
                 navAuthSection.innerHTML = `
                     <div class="flex items-center space-x-2 sm:space-x-4">
                         <span class="text-white hidden sm:block text-sm">Welcome, ${user.displayName || user.email.split('@')[0]}</span>
                         <button id="logout-btn" class="glow-button text-black px-3 py-2 sm:px-4 sm:py-2 rounded-full font-medium text-sm">Logout</button>
                     </div>
                 `;
-                document.getElementById('logout-btn').addEventListener('click', () => {
-                    signOut(auth).then(() => window.location.href = 'index.html');
-                });
+                document.getElementById('logout-btn').addEventListener('click', () => signOut(auth).then(() => window.location.href = 'index.html'));
             } else {
-                // User is signed out
-                navAuthSection.innerHTML = `
-                    <a href="login.html" class="glow-button text-black px-4 py-2 rounded-full font-medium">Login</a>
-                `;
+                // User is signed out or anonymous
+                navAuthSection.innerHTML = `<a href="login.html" class="glow-button text-black px-4 py-2 rounded-full font-medium">Login</a>`;
+                // If no user is logged in at all, sign them in anonymously for guest features
+                if (!user) {
+                    signInAnonymously(auth).catch(error => console.error("Anonymous sign-in failed:", error));
+                }
             }
         }
     });
@@ -79,6 +84,91 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Add other auth logic (signup, social, forgot password) here in the same way,
-    // checking if the relevant form/button exists on the page first.
+    // --- Signup Page Logic ---
+    if (signupOptions && signupForm && emailSignupBtn) {
+        // Event listener to show the email form
+        emailSignupBtn.addEventListener('click', () => {
+            signupOptions.classList.add('hidden');
+            signupForm.classList.remove('hidden');
+        });
+
+        // Event listener for the form submission itself
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const signupError = document.getElementById('signup-error');
+            createUserWithEmailAndPassword(auth, email, password)
+                .then(userCredential => updateProfile(userCredential.user, { displayName: name }))
+                .then(() => window.location.href = 'index.html')
+                .catch(error => signupError.textContent = error.message);
+        });
+    }
+
+    // --- Google Login Logic (works on both login and signup pages) ---
+    if (googleLoginBtn) {
+        googleLoginBtn.addEventListener('click', () => {
+            signInWithPopup(auth, googleProvider)
+                .then(() => window.location.href = 'index.html')
+                .catch(error => {
+                    const errorElement = document.getElementById('login-error') || document.getElementById('signup-error');
+                    if(errorElement) errorElement.textContent = error.message;
+                });
+        });
+    }
+    
+    // --- Anonymous/Guest Login Logic ---
+    if (anonymousLoginBtn) {
+        anonymousLoginBtn.addEventListener('click', () => {
+            signInAnonymously(auth)
+                .then(() => {
+                    console.log('Signed in as guest.');
+                    window.location.href = 'index.html';
+                })
+                .catch((error) => {
+                    console.error("Anonymous sign-in error:", error);
+                    const signupError = document.getElementById('signup-error');
+                    if(signupError) signupError.textContent = error.message;
+                });
+        });
+    }
+
+    // --- Forgot Password Modal Logic ---
+    if (forgotPasswordModal) {
+        const forgotPasswordLink = document.getElementById('forgot-password-link');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const resetPasswordForm = document.getElementById('reset-password-form');
+        const resetMessage = document.getElementById('reset-message');
+
+        if(forgotPasswordLink) {
+            forgotPasswordLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                forgotPasswordModal.classList.replace('hidden', 'flex');
+            });
+        }
+        if(closeModalBtn) {
+            closeModalBtn.addEventListener('click', () => {
+                forgotPasswordModal.classList.replace('flex', 'hidden');
+                if(resetMessage) resetMessage.textContent = '';
+            });
+        }
+        if(resetPasswordForm) {
+            resetPasswordForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('reset-email').value;
+                resetMessage.textContent = '';
+                resetMessage.classList.remove('text-red-500', 'text-green-500');
+                sendPasswordResetEmail(auth, email)
+                    .then(() => {
+                        resetMessage.textContent = 'Success! Check your inbox for a password reset link.';
+                        resetMessage.classList.add('text-green-500');
+                    })
+                    .catch(error => {
+                        resetMessage.textContent = error.message;
+                        resetMessage.classList.add('text-red-500');
+                    });
+            });
+        }
+    }
 });
