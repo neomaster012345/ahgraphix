@@ -1,7 +1,7 @@
 /**
- * JavaScript for AH Graphix Store - Shop Page (v3 - Refactored for Reliability)
+ * JavaScript for AH Graphix Store - Shop Page (v4 - Masterpiece Cards)
  * Handles:
- * 1. Dynamic Product Loading from the provided data structure
+ * 1. Dynamic Product Loading for the new card design
  * 2. Category Filtering
  * 3. Search Functionality
  * 4. Price Sorting
@@ -140,36 +140,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
-    // --- DOM Element References ---
     const productGrid = document.getElementById('product-grid');
     const categoryNav = document.getElementById('category-text-nav');
     const searchBar = document.getElementById('search-bar');
     const priceFilter = document.getElementById('price-filter');
 
-    // --- State Management ---
-    let state = {
-        products: [],
-        category: 'all',
-        searchTerm: '',
-        sortOrder: 'default'
-    };
-
-    // --- Helper function to parse price string to a number ---
-    const parsePrice = (priceString) => {
-        if (!priceString) return 0;
-        const number = parseInt(priceString.replace(/[^0-9]/g, ''), 10);
-        return isNaN(number) ? 0 : number;
-    };
+    // --- Flatten the product data into a single array for easier manipulation ---
+    const allProducts = productsData.flatMap(category => 
+        category.items.map(item => ({
+            ...item,
+            categorySlug: category.slug,
+            priceNum: item.price ? parseInt(item.price.replace(/[^0-9]/g, ''), 10) : 0 
+        }))
+    );
 
     // --- Function to create a single product card element ---
     const createProductCard = (product) => {
         const card = document.createElement('div');
-        card.className = 'product-card product-item';
+        card.className = 'product-card product-item'; // The outer container with the animated border
+
+        const contentWrapper = document.createElement('div');
+        contentWrapper.className = 'product-card-content'; // The inner container with the dark background
 
         const detailsHTML = product.details ? `<p class="product-details">${product.details}</p>` : `<div class="product-details" style="min-height: 25px;"></div>`;
         const priceHTML = product.price ? `<div class="price-wrapper"><p class="price">${product.price}</p></div>` : `<div style="min-height: 50px;"></div>`;
         
-        card.innerHTML = `
+        contentWrapper.innerHTML = `
             <div class="product-access-label">${product.access || 'Standard'}</div>
             <div class="product-logo"><i class="${product.logo || 'fas fa-box-open'}"></i></div>
             <h3 class="product-name">${product.name}</h3>
@@ -177,32 +173,37 @@ document.addEventListener('DOMContentLoaded', () => {
             ${priceHTML}
             <a href="https://wa.me/923268600994?text=I'm%20interested%20in%20%22${encodeURIComponent(product.name)}%22.%20Please%20provide%20more%20details." class="buy-button" target="_blank" rel="noopener noreferrer">Buy Now</a>
         `;
+        
+        card.appendChild(contentWrapper);
         return card;
     };
+    
+    // --- Master function to render products based on current filters ---
+    const renderProducts = () => {
+        const activeCategorySlug = document.querySelector('#category-text-nav .tab-active').dataset.slug;
+        const searchTerm = searchBar.value.toLowerCase().trim();
+        const sortOrder = priceFilter.value;
 
-    // --- Master Render Function ---
-    const render = () => {
-        // 1. Start with the full product list
-        let viewProducts = [...state.products];
+        let viewProducts = [...allProducts];
 
-        // 2. Filter by category
-        if (state.category !== 'all') {
-            viewProducts = viewProducts.filter(p => p.categorySlug === state.category);
+        // Filter by category
+        if (activeCategorySlug !== 'all') {
+            viewProducts = viewProducts.filter(p => p.categorySlug === activeCategorySlug);
         }
 
-        // 3. Filter by search term
-        if (state.searchTerm) {
-            viewProducts = viewProducts.filter(p => p.name.toLowerCase().includes(state.searchTerm));
+        // Filter by search term
+        if (searchTerm) {
+            viewProducts = viewProducts.filter(p => p.name.toLowerCase().includes(searchTerm));
         }
 
-        // 4. Sort the filtered list
-        if (state.sortOrder === 'low-to-high') {
+        // Sort the filtered list
+        if (sortOrder === 'low-to-high') {
             viewProducts.sort((a, b) => a.priceNum - b.priceNum);
-        } else if (state.sortOrder === 'high-to-low') {
+        } else if (sortOrder === 'high-to-low') {
             viewProducts.sort((a, b) => b.priceNum - a.priceNum);
         }
 
-        // 5. Clear the grid and render the final product list
+        // Render the final list
         productGrid.innerHTML = '';
         if (viewProducts.length === 0) {
             productGrid.innerHTML = `<p class="text-center text-gray-400 col-span-full text-xl py-8">No products found matching your criteria.</p>`;
@@ -222,6 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const tab = document.createElement('button');
             tab.className = 'tab-button px-4 py-2 text-lg text-gray-400 hover:text-gold transition-colors';
             tab.textContent = cat.category;
+            tab.dataset.slug = cat.slug;
             
             if (cat.slug === 'all') {
                 tab.classList.add('tab-active');
@@ -230,37 +232,17 @@ document.addEventListener('DOMContentLoaded', () => {
             tab.addEventListener('click', () => {
                 document.querySelectorAll('#category-text-nav .tab-button').forEach(btn => btn.classList.remove('tab-active'));
                 tab.classList.add('tab-active');
-                state.category = cat.slug; // Update state
-                render(); // Re-render
+                renderProducts();
             });
             categoryNav.appendChild(tab);
         });
     };
 
     // --- Event Listeners ---
-    searchBar.addEventListener('input', (e) => {
-        state.searchTerm = e.target.value.toLowerCase().trim(); // Update state
-        render(); // Re-render
-    });
-
-    priceFilter.addEventListener('change', (e) => {
-        state.sortOrder = e.target.value; // Update state
-        render(); // Re-render
-    });
+    searchBar.addEventListener('input', renderProducts);
+    priceFilter.addEventListener('change', renderProducts);
 
     // --- Initial Page Load ---
-    const initialize = () => {
-        // Flatten the product data into a single array for easier manipulation
-        state.products = productsData.flatMap(category => 
-            category.items.map(item => ({
-                ...item,
-                categorySlug: category.slug,
-                priceNum: parsePrice(item.price)
-            }))
-        );
-        setupCategories();
-        render(); // Initial render of all products
-    };
-
-    initialize();
+    setupCategories();
+    renderProducts();
 });

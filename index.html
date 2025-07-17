@@ -20,7 +20,8 @@
     <!-- Navigation -->
     <nav class="glass-nav fixed top-0 w-full z-50 py-4 px-6 md:px-12">
         <div class="container mx-auto flex justify-between items-center">
-            <div class="flex items-center">
+            <!-- CORRECTED: Wrapped logo and title in an anchor tag -->
+            <a href="index.html" class="flex items-center">
                 <!-- Logo -->
                 <div class="mr-4" style="position: relative; width: 60px; height: 0; padding-top: 50.297%; padding-bottom: 0; overflow: hidden; border-radius: 8px;">
                     <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
@@ -28,7 +29,7 @@
                     </iframe>
                 </div>
                 <h1 class="text-xl md:text-2xl font-bold gold-gradient-text">AH Graphix Store</h1>
-            </div>
+            </a>
             
             <div class="hidden md:flex space-x-8">
                 <a href="index.html" class="nav-link gold-gradient-text transition-colors">Home</a>
@@ -38,44 +39,30 @@
                 <a href="about_us.html" class="nav-link text-white hover:gold-gradient-text transition-colors">About Us</a>
             </div>
             
-           <!-- Replace the end of your nav with this -->
-<div class="flex items-center space-x-4">
-    <!-- Cart Button -->
-    <button class="glow-button gold-gradient text-black px-4 py-2 rounded-full font-medium">
-        <span class="flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-            </svg>
-            Cart
-        </span>
-    </button>
+            <!-- Authentication and Cart Section -->
+            <div class="flex items-center space-x-4">
+                <!-- Cart Button -->
+                <button class="glow-button gold-gradient text-black px-4 py-2 rounded-full font-medium">
+                    <span class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        Cart
+                    </span>
+                </button>
 
-    <!-- Authentication Section -->
-    <div id="nav-auth-section">
-        <!-- The Login button is now hardcoded here. auth.js will replace this content AFTER a user successfully logs in. -->
-        <a href="login.html" class="glow-button text-black px-4 py-2 rounded-full font-medium">Login</a>
-    </div>
+                <!-- Authentication Section -->
+                <div id="nav-auth-section">
+                    <a href="login.html" class="glow-button text-black px-4 py-2 rounded-full font-medium">Login</a>
+                </div>
 
-    <!-- Mobile Menu Button -->
-    <button class="md:hidden" id="mobile-menu-button">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-    </button>
-</div>
-
-    <!-- Authentication Section (This will be updated by auth.js) -->
-    <div id="nav-auth-section">
-        <!-- The login/logout button will appear here -->
-    </div>
-
-    <!-- Mobile Menu Button -->
-    <button class="md:hidden" id="mobile-menu-button">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-    </button>
-</div>
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden" id="mobile-menu-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -84,14 +71,14 @@
         <div class="container mx-auto py-4 px-6 flex flex-col space-y-4">
             <a href="index.html" class="text-white hover:text-gold py-2 border-b border-gray-800">Home</a>
             <a href="shop.html" class="text-white hover:text-gold py-2 border-b border-gray-800">Shop</a>
-             <a href="offers.html" class="text-white hover:text-gold py-2 border-b border-gray-800">Offers</a>
+                 <a href="offers.html" class="text-white hover:text-gold py-2 border-b border-gray-800">Offers</a>
             <a href="reviews.html" class="text-white hover:text-gold py-2 border-b border-gray-800">Reviews</a>
             <a href="about_us.html" class="text-white hover:text-gold py-2">About Us</a>
         </div>
     </div>
 
     <!-- HERO SECTION -->
-    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden pt-20">
+    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 z-0">
             <div class="absolute inset-0 bg-gradient-to-b from-black via-black to-darkGray opacity-80"></div>
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,215,0,0.15),transparent_70%)]"></div>
@@ -126,7 +113,7 @@
         <div class="floating-notification absolute bottom-32 right-10 glass-card px-4 py-2 rounded-full">
             <p class="text-sm flex items-center">
                 <span class="inline-block w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
-                <span id="active-users">� 112 users exploring now...</span>
+                <span id="active-users">...</span>
             </p>
         </div>
     </section>
@@ -166,29 +153,34 @@
             </h2>
             <div class="product-grid">
                 <!-- Example Major Tools - These will use the same product card styling -->
-                <!-- Note: The `product-item` class is added for consistency, though filtering won't apply here -->
                 <div class="product-card product-item">
-                    <div class="product-access-label">Private</div>
-                    <div class="product-logo"><i class="fas fa-robot"></i></div>
-                    <h3 class="product-name">ChatGPT Pro</h3>
-                    <p class="product-details">200 $</p>
-                    <div class="price-wrapper"><p class="price">4500 Pkr</p></div>
+                    <div class="product-card-content">
+                        <div class="product-access-label">Private</div>
+                        <div class="product-logo"><i class="fas fa-robot"></i></div>
+                        <h3 class="product-name">ChatGPT Pro</h3>
+                        <p class="product-details">200 $</p>
+                        <div class="price-wrapper"><p class="price">4500 Pkr</p></div>
+                    </div>
                     <a href="https://wa.me/923268600994?text=I%27m%20interested%20in%20%22ChatGPT%20Pro%22.%20Please%20provide%20more%20details." class="buy-button" target="_blank" rel="noopener noreferrer">Buy Now</a>
                 </div>
                 <div class="product-card product-item">
-                    <div class="product-access-label">Lifetime</div>
-                    <div class="product-logo"><i class="fas fa-paint-brush"></i></div>
-                    <h3 class="product-name">Canva Pro</h3>
-                    <p class="product-details">Unlimited Access</p>
-                    <div class="price-wrapper"><p class="price">650 Pkr</p></div>
+                     <div class="product-card-content">
+                        <div class="product-access-label">Lifetime</div>
+                        <div class="product-logo"><i class="fas fa-paint-brush"></i></div>
+                        <h3 class="product-name">Canva Pro</h3>
+                        <p class="product-details">Unlimited Access</p>
+                        <div class="price-wrapper"><p class="price">650 Pkr</p></div>
+                    </div>
                     <a href="https://wa.me/923268600994?text=I%27m%20interested%20in%20%22Canva%20Pro%20(Lifetime)%22.%20Please%20provide%20more%20details." class="buy-button" target="_blank" rel="noopener noreferrer">Buy Now</a>
                 </div>
                 <div class="product-card product-item">
-                    <div class="product-access-label">Monthly</div>
-                    <div class="product-logo"><i class="fas fa-chart-line"></i></div>
-                    <h3 class="product-name">Ahrefs</h3>
-                    <p class="product-details">SEO Suite</p>
-                    <div class="price-wrapper"><p class="price">5000 Pkr</p></div>
+                    <div class="product-card-content">
+                        <div class="product-access-label">Monthly</div>
+                        <div class="product-logo"><i class="fas fa-chart-line"></i></div>
+                        <h3 class="product-name">Ahrefs</h3>
+                        <p class="product-details">SEO Suite</p>
+                        <div class="price-wrapper"><p class="price">5000 Pkr</p></div>
+                    </div>
                     <a href="https://wa.me/923268600994?text=I%27m%20interested%20in%20%22Ahref%22.%20Please%20provide%20more%20details." class="buy-button" target="_blank" rel="noopener noreferrer">Buy Now</a>
                 </div>
             </div>
@@ -210,5 +202,6 @@
 
     <!-- JavaScript for shared functionality -->
     <script src="js/main.js"></script>
+    <script type="module" src="js/auth.js"></script>
 </body>
 </html>
