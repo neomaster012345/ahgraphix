@@ -1,164 +1,102 @@
-/**
- * JavaScript for AH Graphix Store - Authentication (v3 - Rewritten for Reliability)
- * Handles Email/Password, Google, and Anonymous sign-in,
- * and the redesigned signup page flow.
- */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - AH Graphix Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <canvas id="snowCanvas"></canvas>
+    <nav class="glass-nav fixed top-0 w-full z-50 py-4 px-6 md:px-12">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="flex items-center">
+                <div class="mr-4" style="position: relative; width: 60px; height: 0; padding-top: 50.297%; padding-bottom: 0; overflow: hidden; border-radius: 8px;">
+                    <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+                        src="https://www.canva.com/design/DAGiFZ9rPh0/U5QWRhXXT8u2SCZWftDt_A/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
+                    </iframe>
+                </div>
+                <h1 class="text-xl md:text-2xl font-bold gold-gradient-text">AH Graphix Store</h1>
+            </a>
+            <div class="hidden md:flex space-x-8">
+                <a href="index.html" class="nav-link text-white hover:gold-gradient-text transition-colors">Home</a>
+                <a href="shop.html" class="nav-link text-white hover:gold-gradient-text transition-colors">Shop</a>
+                <a href="offers.html" class="nav-link text-white hover:gold-gradient-text transition-colors">Offers</a>
+                <a href="reviews.html" class="nav-link text-white hover:gold-gradient-text transition-colors">Reviews</a>
+                <a href="about_us.html" class="nav-link text-white hover:gold-gradient-text transition-colors">About Us</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button class="glow-button gold-gradient text-black px-4 py-2 rounded-full font-medium">
+                    <span class="flex items-center"><i class="fas fa-shopping-cart mr-1"></i> Cart</span>
+                </button>
+                <div id="nav-auth-section">
+                     <a href="login.html" class="glow-button text-black px-4 py-2 rounded-full font-medium">Login</a>
+                </div>
+                <button class="md:hidden" id="mobile-menu-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-import { 
-    getAuth, 
-    onAuthStateChanged,
-    signInWithEmailAndPassword,
-    createUserWithEmailAndPassword,
-    updateProfile,
-    signInWithPopup,
-    GoogleAuthProvider,
-    sendPasswordResetEmail,
-    signInAnonymously,
-    signOut
-} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-
-// This event listener ensures the entire HTML document is loaded and parsed
-// before any of the code inside it runs.
-document.addEventListener('DOMContentLoaded', () => {
-
-    // --- Firebase Configuration ---
-    const firebaseConfig = {
-        apiKey: "AIzaSyD-ajuwQ3_O6M2Re6apA3iMFaVNjP5NjvM",
-        authDomain: "ahgraphics-4c985.firebaseapp.com",
-        projectId: "ahgraphics-4c985",
-        storageBucket: "ahgraphics-4c985.appspot.com",
-        messagingSenderId: "970036433684",
-        appId: "1:970036433684:web:8b91f72345ec8248cd2801",
-        measurementId: "G-LQQ2ST3C3K"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const googleProvider = new GoogleAuthProvider();
-
-    // --- UI Element References ---
-    const navAuthSection = document.getElementById('nav-auth-section');
-
-    // --- Authentication State Observer (Updates the Nav Bar on all pages) ---
-    onAuthStateChanged(auth, (user) => {
-        console.log("Auth state changed. User:", user);
-        if (navAuthSection) {
-            if (user && !user.isAnonymous) {
-                // User is signed in (and not anonymous)
-                navAuthSection.innerHTML = `
-                    <div class="flex items-center space-x-2 sm:space-x-4">
-                        <span class="text-white hidden sm:block text-sm">Welcome, ${user.displayName || user.email.split('@')[0]}</span>
-                        <button id="logout-btn" class="glow-button text-black px-3 py-2 sm:px-4 sm:py-2 rounded-full font-medium text-sm">Logout</button>
+    <main class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="max-w-md mx-auto bg-gray-900/50 backdrop-blur-lg border border-gold/30 rounded-2xl shadow-2xl p-8">
+                <h2 class="text-3xl font-bold text-center mb-2"><span class="gold-gradient-text">Welcome Back</span></h2>
+                <p class="text-center text-gray-400 mb-8">Login to access your account and orders.</p>
+                <form id="login-form">
+                    <div class="mb-4">
+                        <label for="login-email" class="block text-gray-300 mb-2">Email</label>
+                        <input type="email" id="login-email" class="w-full bg-gray-800 border border-gray-600 rounded-lg py-2 px-4 focus:outline-none focus:border-gold" required>
                     </div>
-                `;
-                document.getElementById('logout-btn').addEventListener('click', () => signOut(auth).then(() => window.location.href = 'index.html'));
-            } else {
-                // User is signed out or anonymous
-                navAuthSection.innerHTML = `<a href="login.html" class="glow-button text-black px-4 py-2 rounded-full font-medium">Login</a>`;
-                // If no user is logged in at all, sign them in anonymously for guest features
-                if (!user) {
-                    signInAnonymously(auth).catch(error => console.error("Anonymous sign-in failed:", error));
-                }
-            }
-        }
-    });
+                    <div class="mb-6">
+                        <label for="login-password" class="block text-gray-300 mb-2">Password</label>
+                        <input type="password" id="login-password" class="w-full bg-gray-800 border border-gray-600 rounded-lg py-2 px-4 focus:outline-none focus:border-gold" required>
+                    </div>
+                    <button type="submit" class="w-full glow-button font-bold py-3 rounded-lg">Login</button>
+                    <p id="login-error" class="text-red-500 text-center mt-4"></p>
+                </form>
+                <div class="text-center my-4">
+                    <a href="#" id="forgot-password-link" class="text-sm text-gold hover:underline">Forgot Password?</a>
+                </div>
+                <div class="flex items-center my-6">
+                    <hr class="flex-grow border-gray-600"><span class="px-4 text-gray-400">OR</span><hr class="flex-grow border-gray-600">
+                </div>
+                <div class="flex flex-col gap-4">
+                    <button id="google-login-btn" class="w-full bg-white text-black font-bold py-3 rounded-lg flex items-center justify-center gap-3 hover:bg-gray-200 transition-colors"><i class="fab fa-google"></i> Continue with Google</button>
+                </div>
+                <p class="text-center text-gray-400 mt-8">Don't have an account? <a href="signup.html" class="font-bold text-gold hover:underline">Sign Up</a></p>
+            </div>
+        </div>
+    </main>
 
-    // --- Page-Specific Logic ---
-    // This structure ensures we only run code for the page the user is currently on.
+    <div id="forgot-password-modal" class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
+        <div class="max-w-md w-full bg-gray-900 border border-gold/30 rounded-2xl shadow-2xl p-8 relative">
+            <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl">&times;</button>
+            <h3 class="text-2xl font-bold text-center mb-2"><span class="gold-gradient-text">Reset Password</span></h3>
+            <p class="text-center text-gray-400 mb-6">Enter your email to receive a password reset link.</p>
+            <form id="reset-password-form">
+                <div class="mb-4">
+                    <label for="reset-email" class="block text-gray-300 mb-2">Email</label>
+                    <input type="email" id="reset-email" class="w-full bg-gray-800 border border-gray-600 rounded-lg py-2 px-4 focus:outline-none focus:border-gold" required>
+                </div>
+                <button type="submit" class="w-full glow-button font-bold py-3 rounded-lg">Send Reset Link</button>
+                <p id="reset-message" class="text-center mt-4"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs (Compatibility Version) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     
-    // LOGIC FOR LOGIN PAGE
-    if (document.getElementById('login-form')) {
-        console.log("Login page detected. Attaching listeners.");
-        const loginForm = document.getElementById('login-form');
-        const googleLoginBtn = document.getElementById('google-login-btn');
-        const loginError = document.getElementById('login-error');
-        const forgotPasswordLink = document.getElementById('forgot-password-link');
-        
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-            signInWithEmailAndPassword(auth, email, password)
-                .then(() => window.location.href = 'index.html')
-                .catch(error => loginError.textContent = error.message);
-        });
-
-        googleLoginBtn.addEventListener('click', () => {
-            signInWithPopup(auth, googleProvider)
-                .then(() => window.location.href = 'index.html')
-                .catch(error => loginError.textContent = error.message);
-        });
-
-        if (forgotPasswordLink) {
-            const forgotPasswordModal = document.getElementById('forgot-password-modal');
-            const closeModalBtn = document.getElementById('close-modal-btn');
-            const resetPasswordForm = document.getElementById('reset-password-form');
-            const resetMessage = document.getElementById('reset-message');
-
-            forgotPasswordLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                forgotPasswordModal.classList.replace('hidden', 'flex');
-            });
-            closeModalBtn.addEventListener('click', () => {
-                forgotPasswordModal.classList.replace('flex', 'hidden');
-                if(resetMessage) resetMessage.textContent = '';
-            });
-            resetPasswordForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const email = document.getElementById('reset-email').value;
-                resetMessage.textContent = '';
-                resetMessage.classList.remove('text-red-500', 'text-green-500');
-                sendPasswordResetEmail(auth, email)
-                    .then(() => {
-                        resetMessage.textContent = 'Success! Check your inbox for a password reset link.';
-                        resetMessage.classList.add('text-green-500');
-                    })
-                    .catch(error => {
-                        resetMessage.textContent = error.message;
-                        resetMessage.classList.add('text-red-500');
-                    });
-            });
-        }
-    }
-
-    // LOGIC FOR SIGNUP PAGE
-    if (document.getElementById('signup-options')) {
-        console.log("Signup page detected. Attaching listeners.");
-        const signupOptions = document.getElementById('signup-options');
-        const emailSignupBtn = document.getElementById('email-signup-btn');
-        const googleLoginBtn = document.getElementById('google-login-btn');
-        const anonymousLoginBtn = document.getElementById('anonymous-login-btn');
-        const signupForm = document.getElementById('signup-form');
-        const signupError = document.getElementById('signup-error');
-
-        emailSignupBtn.addEventListener('click', () => {
-            signupOptions.classList.add('hidden');
-            signupForm.classList.remove('hidden');
-        });
-
-        googleLoginBtn.addEventListener('click', () => {
-            signInWithPopup(auth, googleProvider)
-                .then(() => window.location.href = 'index.html')
-                .catch(error => signupError.textContent = error.message);
-        });
-
-        anonymousLoginBtn.addEventListener('click', () => {
-            signInAnonymously(auth)
-                .then(() => window.location.href = 'index.html')
-                .catch(error => signupError.textContent = error.message);
-        });
-
-        signupForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const name = document.getElementById('signup-name').value;
-            const email = document.getElementById('signup-email').value;
-            const password = document.getElementById('signup-password').value;
-            createUserWithEmailAndPassword(auth, email, password)
-                .then(userCredential => updateProfile(userCredential.user, { displayName: name }))
-                .then(() => window.location.href = 'index.html')
-                .catch(error => signupError.textContent = error.message);
-        });
-    }
-});
+    
+    <script src="js/main.js"></script>
+    <script type="module" src="js/auth.js"></script>
+</body>
+</html>
