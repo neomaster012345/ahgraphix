@@ -95,9 +95,12 @@
         <!-- Modal content -->
     </div>
     
-    <!-- CORRECTED SCRIPT TAGS -->
-    <!-- The main.js script must also be a module if it uses import/export, or a regular script if it doesn't -->
-    <script src="js/main.js"></script> 
+     <!-- Firebase SDKs (Compatibility Version) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+    <!-- Your Custom Unified Script -->
+    <script src="js/main.js"></script>
     <!-- The auth.js script MUST be loaded as a module because it uses 'import' -->
     <script type="module" src="js/auth.js"></script>
 </body>

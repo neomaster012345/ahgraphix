@@ -1,5 +1,5 @@
 /**
- * JavaScript for AH Graphix Store - Main Application (Unified)
+ * JavaScript for AH Graphix Store - Main Application (Unified & Final)
  * This single file handles all shared functionality to prevent loading conflicts.
  * - Mobile Menu
  * - Snowfall Animation
@@ -7,26 +7,12 @@
  * - Firebase Authentication (Login, Signup, Social, Forgot Password, State Management)
  */
 
-// Import the functions you need from the Firebase SDKs
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-import { 
-    getAuth, 
-    onAuthStateChanged,
-    signInWithEmailAndPassword,
-    createUserWithEmailAndPassword,
-    updateProfile,
-    signInWithPopup,
-    GoogleAuthProvider,
-    FacebookAuthProvider,
-    sendPasswordResetEmail,
-    signOut
-} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-
 // This event listener ensures the entire HTML document is loaded and parsed
-// before any of the code inside it runs.
+// before any of the code inside it runs. This is the most reliable way to prevent errors.
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- Firebase Configuration ---
+    // This should be the only place you need to configure Firebase.
     const firebaseConfig = {
         apiKey: "AIzaSyD-ajuwQ3_O6M2Re6apA3iMFaVNjP5NjvM",
         authDomain: "ahgraphics-4c985.firebaseapp.com",
@@ -38,26 +24,25 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const googleProvider = new GoogleAuthProvider();
-    const facebookProvider = new FacebookAuthProvider();
+    // Note: We are using the v8 compat libraries for maximum browser compatibility.
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    const auth = firebase.auth();
+    const googleProvider = new firebase.auth.GoogleAuthProvider();
+    const facebookProvider = new firebase.auth.FacebookAuthProvider();
 
     // --- UI Element References ---
     const navAuthSection = document.getElementById('nav-auth-section');
+    const mobileNavAuthSection = document.getElementById('mobile-nav-auth-section');
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
     const loginForm = document.getElementById('login-form');
     const signupForm = document.getElementById('signup-form');
     const googleLoginBtn = document.getElementById('google-login-btn');
     const facebookLoginBtn = document.getElementById('facebook-login-btn');
-    const loginError = document.getElementById('login-error');
-    const signupError = document.getElementById('signup-error');
     const forgotPasswordModal = document.getElementById('forgot-password-modal');
     const forgotPasswordLink = document.getElementById('forgot-password-link');
-    const closeModalBtn = document.getElementById('close-modal-btn');
-    const resetPasswordForm = document.getElementById('reset-password-form');
-    const resetMessage = document.getElementById('reset-message');
     const activeUsersSpan = document.getElementById('active-users');
 
     // --- Mobile Menu Logic ---
@@ -77,64 +62,74 @@ document.addEventListener('DOMContentLoaded', () => {
         updateUserCount();
     }
 
-    // --- Authentication State Observer (Updates the Nav Bar) ---
-    onAuthStateChanged(auth, (user) => {
-        if (navAuthSection) {
-            if (user) {
-                // User is signed in
-                navAuthSection.innerHTML = `
-                    <div class="flex items-center space-x-4">
-                        <span class="text-white hidden md:block">Welcome, ${user.displayName || user.email.split('@')[0]}</span>
-                        <button id="logout-btn" class="glow-button gold-gradient text-black px-4 py-2 rounded-full font-medium">Logout</button>
-                    </div>
-                `;
-                document.getElementById('logout-btn').addEventListener('click', () => {
-                    signOut(auth).then(() => window.location.href = 'index.html');
-                });
-            } else {
-                // User is signed out
-                navAuthSection.innerHTML = `
-                    <a href="login.html" class="glow-button text-black px-4 py-2 rounded-full font-medium">Login</a>
-                `;
-            }
+    // --- Authentication State Observer (Updates the Nav Bar on all pages) ---
+    auth.onAuthStateChanged((user) => {
+        const desktopAuthContainer = document.getElementById('nav-auth-section');
+        const mobileAuthContainer = document.getElementById('mobile-nav-auth-section');
+
+        if (user) {
+            // User is signed in
+            const welcomeName = user.displayName || user.email.split('@')[0];
+            const desktopHTML = `
+                <span class="text-white hidden md:block text-sm mr-2">Welcome, ${welcomeName}</span>
+                <button id="logout-btn" class="glow-button text-black px-4 py-2 rounded-full font-medium">Logout</button>
+            `;
+            const mobileHTML = `<button id="mobile-logout-btn" class="text-white hover:text-gold py-2 w-full text-left">Logout</button>`;
+
+            if (desktopAuthContainer) desktopAuthContainer.innerHTML = desktopHTML;
+            if (mobileAuthContainer) mobileAuthContainer.innerHTML = mobileHTML;
+
+            const logoutBtn = document.getElementById('logout-btn');
+            const mobileLogoutBtn = document.getElementById('mobile-logout-btn');
+
+            if(logoutBtn) logoutBtn.addEventListener('click', () => auth.signOut());
+            if(mobileLogoutBtn) mobileLogoutBtn.addEventListener('click', () => auth.signOut());
+
+        } else {
+            // User is signed out
+            const loginHTML = `<a href="login.html" class="glow-button text-black px-4 py-2 rounded-full font-medium">Login</a>`;
+            const mobileLoginHTML = `<a href="login.html" class="text-white hover:text-gold py-2">Login</a>`;
+
+            if (desktopAuthContainer) desktopAuthContainer.innerHTML = loginHTML;
+            if (mobileAuthContainer) mobileAuthContainer.innerHTML = mobileLoginHTML;
         }
     });
 
     // --- Login Form Logic ---
     if (loginForm) {
+        const loginError = document.getElementById('login-error');
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
-            signInWithEmailAndPassword(auth, email, password)
-                .then(() => window.location.href = 'index.html')
-                .catch(error => loginError.textContent = error.message);
+            auth.signInWithEmailAndPassword(email, password)
+                .then(() => { window.location.href = 'index.html'; })
+                .catch(error => { loginError.textContent = error.message; });
         });
     }
-
+    
     // --- Signup Form Logic ---
     if (signupForm) {
+        const signupError = document.getElementById('signup-error');
         signupForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const name = document.getElementById('signup-name').value;
             const email = document.getElementById('signup-email').value;
             const password = document.getElementById('signup-password').value;
-            createUserWithEmailAndPassword(auth, email, password)
-                .then(userCredential => updateProfile(userCredential.user, { displayName: name }))
-                .then(() => window.location.href = 'index.html')
-                .catch(error => signupError.textContent = error.message);
+            auth.createUserWithEmailAndPassword(email, password)
+                .then(userCredential => userCredential.user.updateProfile({ displayName: name }))
+                .then(() => { window.location.href = 'index.html'; })
+                .catch(error => { signupError.textContent = error.message; });
         });
     }
 
-    // --- Social Logins (Google & Facebook) ---
+    // --- Social Login Logic ---
     const handleSocialLogin = (provider) => {
-        signInWithPopup(auth, provider)
-            .then(() => window.location.href = 'index.html')
+        auth.signInWithPopup(provider)
+            .then(() => { window.location.href = 'index.html'; })
             .catch(error => {
-                const errorMessage = error.message;
-                if (loginError) loginError.textContent = errorMessage;
-                if (signupError) signupError.textContent = errorMessage;
-                console.error("Social Login Error:", error);
+                const errorElement = document.getElementById('login-error') || document.getElementById('signup-error');
+                if(errorElement) errorElement.textContent = error.message;
             });
     };
     if (googleLoginBtn) googleLoginBtn.addEventListener('click', () => handleSocialLogin(googleProvider));
@@ -142,37 +137,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Forgot Password Modal Logic ---
     if (forgotPasswordLink) {
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const resetPasswordForm = document.getElementById('reset-password-form');
+        const resetMessage = document.getElementById('reset-message');
+
         forgotPasswordLink.addEventListener('click', (e) => {
             e.preventDefault();
             if (forgotPasswordModal) forgotPasswordModal.classList.replace('hidden', 'flex');
         });
-    }
-    if (closeModalBtn) {
-        closeModalBtn.addEventListener('click', () => {
-            if (forgotPasswordModal) forgotPasswordModal.classList.replace('flex', 'hidden');
-            if (resetMessage) resetMessage.textContent = '';
-        });
-    }
-    if (resetPasswordForm) {
-        resetPasswordForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('reset-email').value;
-            resetMessage.textContent = '';
-            resetMessage.classList.remove('text-red-500', 'text-green-500');
-            sendPasswordResetEmail(auth, email)
-                .then(() => {
-                    resetMessage.textContent = 'Success! Check your inbox for a password reset link.';
-                    resetMessage.classList.add('text-green-500');
-                })
-                .catch(error => {
-                    resetMessage.textContent = error.message;
-                    resetMessage.classList.add('text-red-500');
-                });
-        });
+        if (closeModalBtn) {
+            closeModalBtn.addEventListener('click', () => {
+                if (forgotPasswordModal) forgotPasswordModal.classList.replace('flex', 'hidden');
+                if (resetMessage) resetMessage.textContent = '';
+            });
+        }
+        if (resetPasswordForm) {
+            resetPasswordForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('reset-email').value;
+                resetMessage.textContent = '';
+                resetMessage.classList.remove('text-red-500', 'text-green-500');
+                auth.sendPasswordResetEmail(email)
+                    .then(() => {
+                        resetMessage.textContent = 'Success! Check your inbox for a password reset link.';
+                        resetMessage.classList.add('text-green-500');
+                    })
+                    .catch(error => {
+                        resetMessage.textContent = error.message;
+                        resetMessage.classList.add('text-red-500');
+                    });
+            });
+        }
     }
 });
 
-// --- Snowfall Logic (runs after the main DOM content is ready) ---
+// --- Snowfall Logic ---
 window.addEventListener('load', function() {
     const canvas = document.getElementById('snowCanvas');
     if (canvas) {
