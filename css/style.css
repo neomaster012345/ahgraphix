@@ -84,114 +84,126 @@ body {
 }
 
 
-/* --- PREMIUM PRODUCT CARD DESIGN --- */
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
+/* --- MASTERPIECE 3D SHINE CARD DESIGN --- */
 
 .product-card {
-    background: #1a1a1a; /* Darker base for contrast */
-    border-radius: 1.25rem; /* Slightly larger radius */
-    padding: 2px; /* This will be the space for the gradient border */
+    background: linear-gradient(145deg, #2e2e2e, #1a1a1a);
+    border-radius: 1rem;
+    padding: 0;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
     position: relative;
     overflow: hidden;
-    display: flex; /* Ensures the inner content wrapper fills the card */
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-.product-card::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: conic-gradient(from 0deg, transparent 0%, transparent 75%, #FFD700 95%, transparent 100%);
-    z-index: 1;
-    animation: spin 8s linear infinite;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
-
-.product-card:hover::before {
-    opacity: 1;
-}
-
-.product-card-content {
-    background: #1e1e1e; /* The actual inner background of the card */
-    border-radius: 1.15rem; /* Slightly smaller than the parent to show the border */
-    padding: 2rem 1.5rem;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
-    position: relative;
-    z-index: 2;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    perspective: 1000px;
+}
+
+/* 3D Shine Effect Overlay */
+.product-card::after {
+    content: '';
+    position: absolute;
+    top: -110%;
+    left: -210%;
+    width: 200%;
+    height: 200%;
+    opacity: 0;
+    transform: rotate(30deg);
+    background: rgba(255, 255, 255, 0.13);
+    background: linear-gradient(
+        to right, 
+        rgba(255, 255, 255, 0.13) 0%,
+        rgba(255, 255, 255, 0.13) 77%,
+        rgba(255, 255, 255, 0.5) 92%,
+        rgba(255, 255, 255, 0.0) 100%
+    );
+    transition: opacity 0.5s ease, top 0.5s ease, left 0.5s ease;
 }
 
 .product-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.15);
+    transform: translateY(-10px) rotateX(5deg) rotateY(-5deg);
+    box-shadow: 0 35px 50px rgba(0, 0, 0, 0.7);
+}
+
+.product-card:hover::after {
+    opacity: 1;
+    top: -30%;
+    left: -30%;
+}
+
+.product-card-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    transition: transform 0.4s ease;
+    transform-style: preserve-3d;
+}
+
+.product-card:hover .product-card-content {
+    transform: translateZ(25px);
+}
+
+.product-header {
+    padding: 1.5rem 1rem 1rem;
 }
 
 .product-logo {
-    font-size: 3.5rem;
+    font-size: 4rem;
     color: #FFD700;
-    margin-bottom: 1.5rem;
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+    margin-bottom: 1rem;
+    text-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
     height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.3s ease;
-}
-
-.product-card:hover .product-logo {
-    transform: scale(1.1);
+    transform: translateZ(30px); /* Lift the logo even more */
 }
 
 .product-name {
-    font-size: 1.4rem;
-    font-weight: 600;
+    font-size: 1.6rem;
+    font-weight: 700;
     color: #fff;
-    margin-bottom: 0.5rem;
-    line-height: 1.4;
-    min-height: 58px;
+    margin-bottom: 0.25rem;
+    line-height: 1.3;
+    transform: translateZ(20px);
+}
+
+/* ENHANCED CORNER RIBBON LABEL */
+.product-access-label {
+    width: 160px;
+    height: 32px;
+    position: absolute;
+    top: 20px;
+    right: -40px;
+    background: linear-gradient(135deg, #FFD700, #D4AF37);
+    color: #1a1a1a;
+    text-align: center;
+    line-height: 32px;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    transform: rotate(45deg);
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    z-index: 3;
+}
+
+.product-body {
+    padding: 1.5rem;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 .product-details {
     font-size: 0.9rem;
-    color: #a0a0a0;
-    min-height: 25px;
+    color: #b0b0b0;
+    min-height: 40px;
     margin-bottom: 1.5rem;
     flex-grow: 1;
-}
-
-/* CORRECTED: New premium corner ribbon style for the label */
-.product-access-label {
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: linear-gradient(135deg, #FFD700, #D4AF37);
-    color: #1a1a1a;
-    padding: 0.5rem 1.2rem;
-    border-bottom-right-radius: 1.25rem; /* Match outer card radius */
-    border-top-left-radius: 1.15rem; /* Match inner content radius */
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-    z-index: 3; /* Ensure it's above the inner content */
-    border-right: 1px solid rgba(255, 215, 0, 0.2);
-    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
 }
 
 .price-wrapper {
@@ -199,14 +211,21 @@ body {
 }
 
 .price-wrapper .price {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     font-weight: 800;
+    color: #fff;
+    line-height: 1;
+}
+
+.price-wrapper .price span {
+    font-size: 1.5rem;
+    font-weight: 600;
     color: #FFD700;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+    margin-right: 0.25rem;
 }
 
 .buy-button {
-    background: linear-gradient(to right, #FFD700, #D4AF37);
+    background: linear-gradient(135deg, #FFD700, #D4AF37);
     color: #1a1a1a;
     padding: 1rem;
     border: none;
@@ -218,15 +237,17 @@ body {
     display: block;
     width: 100%;
     transition: all 0.3s ease;
-    letter-spacing: 1px;
-    border-radius: 0.75rem; /* Match card rounding */
+    letter-spacing: 1.5px;
+    border-radius: 0.75rem;
+    box-shadow: 0 5px 20px rgba(255, 215, 0, 0.2);
+    transform: translateZ(15px);
 }
 
 .buy-button:hover {
-    background: linear-gradient(to right, #D4AF37, #FFD700);
+    background: linear-gradient(135deg, #D4AF37, #FFD700);
     color: #000;
-    letter-spacing: 2px;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    transform: scale(1.05) translateZ(15px);
+    box-shadow: 0 8px 30px rgba(255, 215, 0, 0.4);
 }
 
 /* --- End of Redesigned Styles --- */
@@ -304,7 +325,7 @@ body {
 /* Product Grid */
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Slightly larger min-width */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 2.5rem;
     align-items: stretch;
 }
@@ -328,10 +349,7 @@ body {
 
 @media (max-width: 480px) {
     .product-grid { 
-        grid-template-columns: 1fr; /* Single column on very small screens */
+        grid-template-columns: 1fr;
         gap: 2rem; 
-    }
-    .product-card-content {
-        padding: 1.5rem 1.2rem;
     }
 }
