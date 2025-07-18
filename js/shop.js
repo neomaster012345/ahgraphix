@@ -1,14 +1,13 @@
 /**
- * JavaScript for AH Graphix Store - Shop Page (v4 - Masterpiece Cards)
+ * JavaScript for AH Graphix Store - Shop Page
  * Handles:
- * 1. Dynamic Product Loading for the new card design
- * 2. Category Filtering
- * 3. Search Functionality
- * 4. Price Sorting
+ * 1. Dynamic Product Loading
+ * 2. Category Filtering, Search, and Price Sorting
+ * 3. Dynamic IPTV Pricing Table Generation
  */
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- Product Data ---
+    // --- Product Card Data ---
     const productsData = [
         {
             category: "AI Tools",
@@ -140,10 +139,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
+    // --- IPTV Pricing Table Data ---
+    const iptvData = [
+        { name: "Opplex TV", prices: ["250", "650", "1300", "1900", "2500"] },
+        { name: "BosTV", prices: ["280", "650", "1500", "1800", "2300"] },
+        { name: "Rolex TV", prices: ["300", "700", "1500", "1800", "2400"] },
+        { name: "Geo (Asia)", prices: ["450", "1150", "2000", "2550", "3600"] },
+        { name: "Geo (Worldwide 18+)", prices: ["700", "1350", "2700", "3750", "5000"] },
+        { name: "Starshare", prices: ["600", "1350", "2700", "3750", "5000"] },
+        { name: "Crystal", prices: ["650", "1450", "2800", "3850", "5000"] },
+        { name: "Mega", prices: ["700", "1500", "2800", "3900", "5000"] },
+        { name: "B1g", prices: ["700", "1500", "2800", "3900", "5000"] },
+        { name: "5g IPTV", prices: ["800", "1650", "2850", "3950", "5250"] },
+        { name: "Trex", prices: ["1500", "2300", "4200", "6200", "8000"] }
+    ];
+
     const productGrid = document.getElementById('product-grid');
     const categoryNav = document.getElementById('category-text-nav');
     const searchBar = document.getElementById('search-bar');
     const priceFilter = document.getElementById('price-filter');
+    const iptvTableBody = document.getElementById('iptv-table-body');
 
     // --- Flatten the product data into a single array for easier manipulation ---
     const allProducts = productsData.flatMap(category => 
@@ -157,21 +172,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Function to create a single product card element ---
     const createProductCard = (product) => {
         const card = document.createElement('div');
-        card.className = 'product-card product-item'; // The outer container with the animated border
+        card.className = 'product-card product-item';
 
         const contentWrapper = document.createElement('div');
-        contentWrapper.className = 'product-card-content'; // The inner container with the dark background
+        contentWrapper.className = 'product-card-content';
 
         const detailsHTML = product.details ? `<p class="product-details">${product.details}</p>` : `<div class="product-details" style="min-height: 25px;"></div>`;
         const priceHTML = product.price ? `<div class="price-wrapper"><p class="price">${product.price}</p></div>` : `<div style="min-height: 50px;"></div>`;
         
         contentWrapper.innerHTML = `
-            <div class="product-access-label">${product.access || 'Standard'}</div>
-            <div class="product-logo"><i class="${product.logo || 'fas fa-box-open'}"></i></div>
-            <h3 class="product-name">${product.name}</h3>
-            ${detailsHTML}
-            ${priceHTML}
-            <a href="https://wa.me/923268600994?text=I'm%20interested%20in%20%22${encodeURIComponent(product.name)}%22.%20Please%20provide%20more%20details." class="buy-button" target="_blank" rel="noopener noreferrer">Buy Now</a>
+            <div class="product-header">
+                <div class="product-logo"><i class="${product.logo || 'fas fa-box-open'}"></i></div>
+                <h3 class="product-name">${product.name}</h3>
+                <div class="product-access-label">${product.access || 'Standard'}</div>
+            </div>
+            <div class="product-body">
+                <p class="product-details">${product.details || ''}</p>
+                <div class="price-wrapper"><p class="price"><span>Rs</span>${product.priceNum}</p></div>
+                <a href="https://wa.me/923268600994?text=I'm%20interested%20in%20%22${encodeURIComponent(product.name)}%22." class="buy-button" target="_blank" rel="noopener noreferrer">Buy Now</a>
+            </div>
         `;
         
         card.appendChild(contentWrapper);
@@ -180,6 +199,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- Master function to render products based on current filters ---
     const renderProducts = () => {
+        if (!productGrid || !categoryNav || !searchBar || !priceFilter) return; // Exit if elements aren't on the page
+
         const activeCategorySlug = document.querySelector('#category-text-nav .tab-active').dataset.slug;
         const searchTerm = searchBar.value.toLowerCase().trim();
         const sortOrder = priceFilter.value;
@@ -217,6 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Setup Category Navigation ---
     const setupCategories = () => {
+        if (!categoryNav) return;
         const categories = [{ category: "All Products", slug: "all" }, ...productsData];
         categoryNav.innerHTML = '';
         categories.forEach(cat => {
@@ -237,12 +259,46 @@ document.addEventListener('DOMContentLoaded', () => {
             categoryNav.appendChild(tab);
         });
     };
+    
+    // --- Function to render the IPTV Pricing Table ---
+    const renderIptvTable = () => {
+        if (!iptvTableBody) return;
+
+        iptvTableBody.innerHTML = '';
+        const durations = ["1 Month", "3 Months", "6 Months", "9 Months", "12 Months"];
+
+        iptvData.forEach(platform => {
+            const row = document.createElement('div');
+            row.className = 'grid-row md:grid md:grid-cols-6';
+
+            let rowHTML = `<div class="grid-cell platform-name">${platform.name}</div>`;
+
+            platform.prices.forEach((price, index) => {
+                const duration = durations[index];
+                const whatsappMessage = encodeURIComponent(`I'm interested in ${platform.name} (${duration}).`);
+                rowHTML += `
+                    <div class="grid-cell price-cell" data-label="${duration}">
+                        Rs. ${price}/- 
+                        <a href="https://wa.me/923268600994?text=${whatsappMessage}" target="_blank" class="buy-button-small ml-2">Buy</a>
+                    </div>
+                `;
+            });
+            
+            row.innerHTML = rowHTML;
+            iptvTableBody.appendChild(row);
+        });
+    };
 
     // --- Event Listeners ---
-    searchBar.addEventListener('input', renderProducts);
-    priceFilter.addEventListener('change', renderProducts);
+    if (searchBar) searchBar.addEventListener('input', renderProducts);
+    if (priceFilter) priceFilter.addEventListener('change', renderProducts);
 
     // --- Initial Page Load ---
-    setupCategories();
-    renderProducts();
+    if (productGrid && categoryNav) {
+        setupCategories();
+        renderProducts();
+    }
+    if (iptvTableBody) {
+        renderIptvTable();
+    }
 });

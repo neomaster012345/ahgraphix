@@ -20,6 +20,62 @@ body {
     padding-top: 6rem; /* This pushes all content down below the fixed nav */
 }
 
+/* --- PRELOADER STYLES --- */
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #121212;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.75s ease, visibility 0.75s ease;
+}
+
+.preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader-logo {
+    width: 100px;
+    height: 100px;
+    border: 4px solid rgba(255, 215, 0, 0.2);
+    border-top-color: #FFD700;
+    border-radius: 50%;
+    animation: spin 1.5s infinite cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader-logo .gold-gradient-text {
+    font-size: 2.5rem;
+    font-weight: 800;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(0.9);
+        opacity: 0.7;
+    }
+}
+
+
 /* Snowfall Canvas */
 #snowCanvas {
     position: fixed;

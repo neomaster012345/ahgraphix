@@ -12,17 +12,90 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Additional styles for the new pricing section */
+        .pricing-card {
+            background: #1e1e1e;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .pricing-card:hover {
+            transform: translateY(-12px);
+        }
+
+        /* --- Colored Glow Effects --- */
+        .student-glow:hover {
+            border-color: #3b82f6; /* Blue */
+            box-shadow: 0 20px 50px rgba(59, 130, 246, 0.2);
+        }
+        .pro-glow:hover {
+            border-color: #FFD700; /* Gold */
+            box-shadow: 0 20px 50px rgba(255, 215, 0, 0.2);
+        }
+        .agency-glow:hover {
+            border-color: #ef4444; /* Red */
+            box-shadow: 0 20px 50px rgba(239, 68, 68, 0.2);
+        }
+        
+        .pricing-card.featured {
+            transform: scale(1.05);
+            border-color: #FFD700;
+            box-shadow: 0 20px 50px rgba(255, 215, 0, 0.2);
+        }
+         .pricing-card.featured:hover {
+            transform: scale(1.1);
+        }
+        
+        /* --- Enhanced "Popular" Label --- */
+        .popular-tag {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #FFD700;
+            color: #121212;
+            width: 100px;
+            height: 100px;
+            clip-path: polygon(0 0, 100% 0, 100% 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .popular-tag span {
+            transform: rotate(45deg) translateY(-15px);
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .plan-tools li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+         .plan-tools li i {
+            color: #FFD700;
+            margin-right: 0.75rem;
+        }
+    </style>
 </head>
 <body>
     <!-- Snowfall Canvas (positioned behind content) -->
     <canvas id="snowCanvas"></canvas>
 
+     <!-- PRELOADER -->
+    <div id="preloader" class="preloader">
+        <div class="loader-logo">
+            <!-- You can replace this with your actual logo if you have it as an SVG or image -->
+            <span class="gold-gradient-text">AH</span>
+        </div>
+    </div>
+
+    
     <!-- Navigation -->
     <nav class="glass-nav fixed top-0 w-full z-50 py-4 px-6 md:px-12">
         <div class="container mx-auto flex justify-between items-center">
-            <!-- CORRECTED: Wrapped logo and title in an anchor tag -->
             <a href="index.html" class="flex items-center">
-                <!-- Logo -->
                 <div class="mr-4" style="position: relative; width: 60px; height: 0; padding-top: 50.297%; padding-bottom: 0; overflow: hidden; border-radius: 8px;">
                     <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
                         src="https://www.canva.com/design/DAGiFZ9rPh0/U5QWRhXXT8u2SCZWftDt_A/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
@@ -34,29 +107,20 @@
             <div class="hidden md:flex space-x-8">
                 <a href="index.html" class="nav-link gold-gradient-text transition-colors">Home</a>
                 <a href="shop.html" class="nav-link text-white hover:gold-gradient-text transition-colors">Shop</a>
-                 <a href="offers.html" class="nav-link text-white hover:gold-gradient-text transition-colors">Offers</a>
+                <a href="offers.html" class="nav-link text-white hover:gold-gradient-text transition-colors">Offers</a>
                 <a href="reviews.html" class="nav-link text-white hover:gold-gradient-text transition-colors">Reviews</a>
                 <a href="about_us.html" class="nav-link text-white hover:gold-gradient-text transition-colors">About Us</a>
             </div>
             
-            <!-- Authentication and Cart Section -->
             <div class="flex items-center space-x-4">
-                <!-- Cart Button -->
                 <button class="glow-button gold-gradient text-black px-4 py-2 rounded-full font-medium">
                     <span class="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
-                        Cart
+                        <i class="fas fa-shopping-cart mr-1"></i> Cart
                     </span>
                 </button>
-
-                <!-- Authentication Section -->
                 <div id="nav-auth-section">
                     <a href="login.html" class="glow-button text-black px-4 py-2 rounded-full font-medium">Login</a>
                 </div>
-
-                <!-- Mobile Menu Button -->
                 <button class="md:hidden" id="mobile-menu-button">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -71,7 +135,7 @@
         <div class="container mx-auto py-4 px-6 flex flex-col space-y-4">
             <a href="index.html" class="text-white hover:text-gold py-2 border-b border-gray-800">Home</a>
             <a href="shop.html" class="text-white hover:text-gold py-2 border-b border-gray-800">Shop</a>
-                 <a href="offers.html" class="text-white hover:text-gold py-2 border-b border-gray-800">Offers</a>
+            <a href="offers.html" class="text-white hover:text-gold py-2 border-b border-gray-800">Offers</a>
             <a href="reviews.html" class="text-white hover:text-gold py-2 border-b border-gray-800">Reviews</a>
             <a href="about_us.html" class="text-white hover:text-gold py-2">About Us</a>
         </div>
@@ -83,7 +147,7 @@
             <div class="absolute inset-0 bg-gradient-to-b from-black via-black to-darkGray opacity-80"></div>
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,215,0,0.15),transparent_70%)]"></div>
             <svg class="absolute bottom-0 left-0 w-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-                <path fill="#0a0a0a" fill-opacity="1" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,202.7C672,203,768,181,864,181.3C960,181,1056,203,1152,202.7C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                <path fill="#121212" fill-opacity="1" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,202.7C672,203,768,181,864,181.3C960,181,1056,203,1152,202.7C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
             </svg>
         </div>
         
@@ -100,16 +164,12 @@
                         Explore Products
                     </a>
                     <a href="https://wa.me/923268600994" class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-full font-bold text-lg flex items-center justify-center transition-all">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-                        </svg>
-                        Contact Us
+                        <i class="fab fa-whatsapp mr-2"></i> Contact Us
                     </a>
                 </div>
             </div>
         </div>
 
-        <!-- Floating User Activity -->
         <div class="floating-notification absolute bottom-32 right-10 glass-card px-4 py-2 rounded-full">
             <p class="text-sm flex items-center">
                 <span class="inline-block w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
@@ -118,29 +178,72 @@
         </div>
     </section>
 
-    <!-- OUR TOP OFFERS SECTION (Example) -->
-    <section id="offers" class="py-16 bg-darkGray">
+    <!-- NEW PRICING PLANS SECTION -->
+    <section id="pricing" class="py-20 bg-darkGray">
         <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold mb-12 text-center slide-in">
-                <span class="gold-gradient-text">Our Top</span> Offers
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Offer Card 1 -->
-                <div class="glass-card p-8 rounded-lg text-center product-card">
-                    <h3 class="text-2xl font-bold gold-gradient-text mb-4">Limited Time Deal!</h3>
-                    <p class="text-gray-300 mb-6">Get 20% off on all AI Tools for the next 48 hours!</p>
-                    <a href="shop.html" class="glow-button gold-gradient text-black px-6 py-2 rounded-full font-bold">
-                        Claim Offer
-                    </a>
+            <div class="text-center mb-16">
+                 <h2 class="text-4xl md:text-5xl font-bold mb-4">
+                    <span class="gold-gradient-text">Choose Your Plan</span>
+                </h2>
+                <p class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto">
+                    Powerful toolkits curated for every need and budget. Start creating today.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                <!-- Student Plan -->
+                <div class="pricing-card student-glow rounded-lg p-8 h-full flex flex-col">
+                    <h3 class="text-2xl font-bold mb-2">Student Plan</h3>
+                    <p class="text-4xl font-extrabold gold-gradient-text mb-4">Rs 1000<span class="text-lg text-gray-400 font-medium">/Month</span></p>
+                    <p class="text-gray-400 mb-6">Essential tools for academic and creative success.</p>
+                    <ul class="plan-tools text-left text-gray-300 flex-grow">
+                        <li><i class="fas fa-check-circle"></i> ChatGPT-4</li>
+                        <li><i class="fas fa-check-circle"></i> Jasper Ai</li>
+                        <li><i class="fas fa-check-circle"></i> Skill Share</li>
+                        <li><i class="fas fa-check-circle"></i> Semrush</li>
+                        <li><i class="fas fa-check-circle"></i> Quilbot & Grammarly</li>
+                        <li><i class="fas fa-check-circle"></i> Canva Pro Edu</li>
+                    </ul>
+                    <a href="https://wa.me/923268600994?text=I'm%20interested%20in%20the%20'Student%20Plan'." class="glow-button mt-8 w-full block py-3 rounded-lg font-bold">Get Started</a>
                 </div>
-                <!-- Offer Card 2 -->
-                <div class="glass-card p-8 rounded-lg text-center product-card">
-                    <h3 class="text-2xl font-bold gold-gradient-text mb-4">New User Bonus</h3>
-                    <p class="text-gray-300 mb-6">Sign up today and receive a free month of Canva Pro!</p>
-                    <a href="shop.html" class="glow-button gold-gradient text-black px-6 py-2 rounded-full font-bold">
-                        Get Started
-                    </a>
+
+                <!-- Pro Plan (Featured) -->
+                <div class="pricing-card pro-glow featured rounded-lg p-8 h-full flex flex-col relative">
+                    <div class="popular-tag"><span>Popular</span></div>
+                    <h3 class="text-2xl font-bold mb-2">Pro Plan</h3>
+                    <p class="text-5xl font-extrabold gold-gradient-text mb-4">Rs 2000<span class="text-lg text-gray-400 font-medium">/Month</span></p>
+                    <p class="text-gray-400 mb-6">The ultimate toolkit for professionals and creators.</p>
+                    <ul class="plan-tools text-left text-gray-300 flex-grow">
+                        <li><i class="fas fa-check-circle"></i> 20 Powerful Tools Including:</li>
+                        <li><i class="fas fa-star text-sm"></i> ChatGPT-4 & Jasper AI</li>
+                        <li><i class="fas fa-star text-sm"></i> Semrush & Moz Pro</li>
+                        <li><i class="fas fa-star text-sm"></i> Skill Share & Udemy</li>
+                        <li><i class="fas fa-star text-sm"></i> Envato Elements</li>
+                        <li><i class="fas fa-star text-sm"></i> ...and many more!</li>
+                    </ul>
+                    <a href="https://wa.me/923268600994?text=I'm%20interested%20in%20the%20'Pro%20Plan'." class="glow-button mt-8 w-full block py-4 rounded-lg font-bold text-lg">Choose Pro</a>
                 </div>
+
+                <!-- Agency Plan -->
+                <div class="pricing-card agency-glow rounded-lg p-8 h-full flex flex-col">
+                    <h3 class="text-2xl font-bold mb-2">Agency Plan</h3>
+                    <p class="text-4xl font-extrabold gold-gradient-text mb-4">Rs 2500<span class="text-lg text-gray-400 font-medium">/Month</span></p>
+                    <p class="text-gray-400 mb-6">The complete suite for agencies and power users.</p>
+                    <ul class="plan-tools text-left text-gray-300 flex-grow">
+                        <li><i class="fas fa-check-circle"></i> 80+ Premium Tools</li>
+                         <li><i class="fas fa-star text-sm"></i> All Pro Plan Tools</li>
+                        <li><i class="fas fa-star text-sm"></i> Advanced SEO (Ahrefs, Spyfu)</li>
+                        <li><i class="fas fa-star text-sm"></i> Video & Asset Libraries</li>
+                        <li><i class="fas fa-star text-sm"></i> E-commerce Tools</li>
+                        <li><i class="fas fa-star text-sm"></i> ...and much more!</li>
+                    </ul>
+                    <a href="https://wa.me/923268600994?text=I'm%20interested%20in%20the%20'Agency%20Plan'." class="glow-button mt-8 w-full block py-3 rounded-lg font-bold">Contact Us</a>
+                </div>
+            </div>
+             <div class="text-center mt-16">
+                <a href="offers.html" class="text-gold text-lg font-semibold hover:underline">
+                    View All Plans & Tools <i class="fas fa-arrow-right ml-2"></i>
+                </a>
             </div>
         </div>
     </section>
@@ -149,10 +252,9 @@
     <section id="major-tools" class="py-16 bg-black">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl font-bold mb-12 text-center slide-in">
-                <span class="gold-gradient-text">Major</span> Tools
+                <span class="gold-gradient-text">Featured</span> Tools
             </h2>
             <div class="product-grid">
-                <!-- Example Major Tools - These will use the same product card styling -->
                 <div class="product-card product-item">
                     <div class="product-card-content">
                         <div class="product-access-label">Private</div>
@@ -161,7 +263,7 @@
                         <p class="product-details">200 $</p>
                         <div class="price-wrapper"><p class="price">4500 Pkr</p></div>
                     </div>
-                    <a href="https://wa.me/923268600994?text=I%27m%20interested%20in%20%22ChatGPT%20Pro%22.%20Please%20provide%20more%20details." class="buy-button" target="_blank" rel="noopener noreferrer">Buy Now</a>
+                    <a href="https://wa.me/923268600994?text=I'm%20interested%20in%20%22ChatGPT%20Pro%22." class="buy-button" target="_blank" rel="noopener noreferrer">Buy Now</a>
                 </div>
                 <div class="product-card product-item">
                      <div class="product-card-content">
@@ -171,7 +273,7 @@
                         <p class="product-details">Unlimited Access</p>
                         <div class="price-wrapper"><p class="price">650 Pkr</p></div>
                     </div>
-                    <a href="https://wa.me/923268600994?text=I%27m%20interested%20in%20%22Canva%20Pro%20(Lifetime)%22.%20Please%20provide%20more%20details." class="buy-button" target="_blank" rel="noopener noreferrer">Buy Now</a>
+                    <a href="https://wa.me/923268600994?text=I'm%20interested%20in%20%22Canva%20Pro%20(Lifetime)%22." class="buy-button" target="_blank" rel="noopener noreferrer">Buy Now</a>
                 </div>
                 <div class="product-card product-item">
                     <div class="product-card-content">
@@ -181,8 +283,20 @@
                         <p class="product-details">SEO Suite</p>
                         <div class="price-wrapper"><p class="price">5000 Pkr</p></div>
                     </div>
-                    <a href="https://wa.me/923268600994?text=I%27m%20interested%20in%20%22Ahref%22.%20Please%20provide%20more%20details." class="buy-button" target="_blank" rel="noopener noreferrer">Buy Now</a>
+                    <a href="https://wa.me/923268600994?text=I'm%20interested%20in%20%22Ahrefs%22." class="buy-button" target="_blank" rel="noopener noreferrer">Buy Now</a>
                 </div>
+
+                 <div class="product-card product-item">
+                    <div class="product-card-content">
+                        <div class="product-access-label">Monthly</div>
+                        <div class="product-logo"><i class="fas fa-solid fa-cube"></i></div>
+                        <h3 class="product-name">Envato Elements</h3>
+                        <p class="product-details">Unlimitted</p>
+                        <div class="price-wrapper"><p class="price">2000 Pkr</p></div>
+                    </div>
+                    <a href="https://wa.me/923268600994?text=I'm%20interested%20in%20%22Envato%22." class="buy-button" target="_blank" rel="noopener noreferrer">Buy Now</a>
+                </div>
+
             </div>
             <div class="text-center mt-12">
                 <a href="shop.html" class="glow-button gold-gradient text-black px-8 py-3 rounded-full font-bold text-lg">
@@ -200,11 +314,7 @@
         </div>
     </footer>
 
-    <!-- Firebase SDKs (Compatibility Version) -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-
-    <!-- Your Custom Unified Script -->
+    <!-- JavaScript for shared functionality -->
     <script src="js/main.js"></script>
     <script type="module" src="js/auth.js"></script>
 </body>

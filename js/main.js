@@ -11,6 +11,28 @@
 // before any of the code inside it runs. This is the most reliable way to prevent errors.
 document.addEventListener('DOMContentLoaded', () => {
 
+
+    // --- PRELOADER LOGIC ---
+// This runs as soon as the window's content (images, stylesheets) is fully loaded.
+window.addEventListener('load', () => {
+    const preloader = document.getElementById('preloader');
+    const body = document.querySelector('body');
+    if (preloader) {
+        // Fade out the preloader
+        preloader.classList.add('hidden');
+        // Fade in the page content
+        body.classList.add('content-visible');
+        
+        // Optional: Remove the preloader from the DOM after the transition
+        setTimeout(() => {
+            if (preloader.parentNode) {
+                preloader.parentNode.removeChild(preloader);
+            }
+        }, 1000); // Should match the transition duration
+    }
+});
+
+
     // --- Firebase Configuration ---
     // This should be the only place you need to configure Firebase.
     const firebaseConfig = {
