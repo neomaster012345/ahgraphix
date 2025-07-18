@@ -31,8 +31,6 @@ window.addEventListener('load', () => {
         }, 1000); // Should match the transition duration
     }
 });
-
-
     // --- Firebase Configuration ---
     // This should be the only place you need to configure Firebase.
     const firebaseConfig = {
